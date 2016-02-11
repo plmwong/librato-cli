@@ -1,0 +1,46 @@
+#!/usr/bin/env node
+var filesystem = require('fs');
+var config = JSON.parse(filesystem.readFileSync('config.json'));
+
+var program = require('commander');
+program.parse(process.argv);
+
+var args = program.args;
+
+if (args.length < 1) {
+  console.error('You must specify a space id');
+  process.exit(1);
+}
+
+var space = args[0];
+
+var Client = require('node-rest-client').Client;
+var options_auth = { user: config.librato_token, password: config.librato_apikey };
+
+var client = new Client(options_auth);
+
+var remove_ids = function(data) {
+  for(var i = 0; i < data.length; i++) {
+    delete data[i].id;
+
+    if (data[i].streams) {
+      for(var j = 0; j < data[i].streams.length; j++) {
+        delete data[i].streams[j].id;
+      }
+    }
+  }
+
+  return data;
+}
+
+var space_definition = {};
+
+client.get(config.base_url + "spaces/" + space,
+           function (data, response) {
+              space_definition = remove_ids([ data ])[0];
+              client.get(config.base_url + "spaces/" + space + "/charts",
+                         function (data, response) {
+                            space_definition.charts = remove_ids(data);
+                            console.log(JSON.stringify(space_definition, null, 2));
+                         });
+           });

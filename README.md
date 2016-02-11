@@ -2,6 +2,12 @@
 
 _librato-cli_ is a command-line tool interacting with the Librato API (https://www.librato.com/docs/api).
 
+## Getting Started ##
+```
+npm install
+./librato-cli help
+```
+
 ## Configuration ##
 _librato-cli_ requires a token and API key to access the API. You can generate these through your Librato account.
 
@@ -42,4 +48,10 @@ _librato-cli_ requires a token and API key to access the API. You can generate t
 
 #import that chart definition to a different space
 ./librato-cli chart import 65409 "$(cat test.json)"
+
+#export the definition of an entire space (including all of its charts) to a file
+./librato-cli space export 65408 > test.json
+
+#import that space definition as a brand new space
+./librato-cli space import "$(cat test.json)"
 ```

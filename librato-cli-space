@@ -4,4 +4,6 @@ program
   .version('0.0.1')
   .command('list', 'list librato spaces')
   .command('get [space_id]', 'get definition for a librato space')
+  .command('export [space_id]', 'export the definition for a space, including all its charts')
+  .command('import [space_id] [space_definition_json]', 'import the definition for a space as a newly created space')
   .parse(process.argv);
