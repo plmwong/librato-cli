@@ -8,7 +8,7 @@ program.parse(process.argv);
 var spaces = program.args;
 
 if (!spaces.length) {
-  console.error('space is required');
+  console.error('You must specify a space');
   process.exit(1);
 }
 

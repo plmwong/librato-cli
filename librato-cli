@@ -2,8 +2,8 @@
 var program = require('commander');
 program
   .version('0.0.1')
-  .command('sources', 'list sources')
-  .command('metrics [filter]', 'list metrics')
-  .command('spaces', 'list spaces')
-  .command('charts [space]', 'list charts on a space')
+  .command('chart', 'manage librato charts')
+  .command('source', 'manage librato sources')
+  .command('metric', 'manage librato metrics')
+  .command('space', 'manage librato spaces')
   .parse(process.argv);
