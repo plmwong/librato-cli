@@ -3,4 +3,5 @@ var program = require('commander');
 program
   .version('0.0.1')
   .command('list', 'list librato spaces')
+  .command('get [space_id]', 'get definition for a librato space')
   .parse(process.argv);

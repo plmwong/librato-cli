@@ -2,5 +2,7 @@
 var program = require('commander');
 program
   .version('0.0.1')
-  .command('list [space]', 'list librato charts on a space')
+  .command('list [space_id]', 'list librato charts on a space')
+  .command('export [space_id] [chart_id]', 'export the definition for a chart')
+  .command('import [space_id] [chart_definition_json]', 'import the definition for a chart into a target space')
   .parse(process.argv);
