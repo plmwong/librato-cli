@@ -1,13 +1,8 @@
 #!/usr/bin/env node
-var filesystem = require('fs');
-var config = JSON.parse(filesystem.readFileSync('config.json'));
+var config = require('./modules/librato-cli-config');
+var client = require('./modules/librato-cli-client');
 
-var Client = require('node-rest-client').Client;
-var options_auth = { user: config.librato_token, password: config.librato_apikey };
-
-var client = new Client(options_auth);
-
-client.get(config.base_url + "spaces",
-           function (data, response) {
-              console.log(JSON.stringify(data, null, 2));
-           });
+var endPoint = config.baseUrl + "spaces";
+client.get(endPoint, function printResponse(data, response) {
+                       console.log(JSON.stringify(data, null, 2));
+                     });

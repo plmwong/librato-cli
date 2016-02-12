@@ -1,32 +1,27 @@
 #!/usr/bin/env node
-var filesystem = require('fs');
-var config = JSON.parse(filesystem.readFileSync('config.json'));
-
+var config = require('./modules/librato-cli-config');
+var client = require('./modules/librato-cli-client');
 var program = require('commander');
-program.parse(process.argv);
 
+program.parse(process.argv);
 var args = program.args;
 
 if (args.length < 2) {
-  console.error('You must specify a space id to create the chart in');
+  console.error('You must specify a space id to import to chart in to');
   process.exit(1);
 }
 
-var space = args[0];
-var chart_definition = args[1];
+var importSpace = function(spaceId, chartDefinition) {
+  var payload = {
+    data: JSON.parse(chartDefinition),
+    headers: { "Content-Type": "application/json" }
+  };
 
-var Client = require('node-rest-client').Client;
-var options_auth = { user: config.librato_token, password: config.librato_apikey };
+  var endPoint = config.baseUrl + "spaces/" + spaceId + "/charts";
+  client.post(endPoint, payload, function (data, response) {
+                                   console.log(response.statusCode + ': ' + response.statusMessage);
+                                   console.log(JSON.stringify(data, null, 2));
+                                 });
+}
 
-var client = new Client(options_auth);
-
-var payload = {
-  data: JSON.parse(chart_definition),
-  headers: { "Content-Type": "application/json" }
-};
-
-client.post(config.base_url + "spaces/" + space + "/charts", payload,
-           function (data, response) {
-              console.log(response.statusCode + ': ' + response.statusMessage);
-              console.log(JSON.stringify(data, null, 2));
-           });
+importSpace(args[0], args[1]);

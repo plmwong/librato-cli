@@ -1,0 +1,4 @@
+var filesystem = require('fs');
+var config = JSON.parse(filesystem.readFileSync('config.json'));
+
+module.exports = config;

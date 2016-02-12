@@ -1,25 +1,17 @@
 #!/usr/bin/env node
-var filesystem = require('fs');
-var config = JSON.parse(filesystem.readFileSync('config.json'));
-
+var config = require('./modules/librato-cli-config');
+var client = require('./modules/librato-cli-client');
 var program = require('commander');
-program.parse(process.argv);
 
+program.parse(process.argv);
 var args = program.args;
 
 if (args.length < 1) {
-  console.error('You must specify a space id');
+  console.error('You must specify the space id of the space you wish to export');
   process.exit(1);
 }
 
-var space = args[0];
-
-var Client = require('node-rest-client').Client;
-var options_auth = { user: config.librato_token, password: config.librato_apikey };
-
-var client = new Client(options_auth);
-
-var remove_ids = function(data) {
+var removeIds = function(data) {
   for(var i = 0; i < data.length; i++) {
     delete data[i].id;
 
@@ -33,14 +25,24 @@ var remove_ids = function(data) {
   return data;
 }
 
-var space_definition = {};
+var exportCharts = function(spaceId, callback) {
+  var endPoint = config.baseUrl + "spaces/" + spaceId + "/charts";
+  client.get(endPoint, function (data, response) {
+                         callback(data);
+                       });
+}
 
-client.get(config.base_url + "spaces/" + space,
-           function (data, response) {
-              space_definition = remove_ids([ data ])[0];
-              client.get(config.base_url + "spaces/" + space + "/charts",
-                         function (data, response) {
-                            space_definition.charts = remove_ids(data);
-                            console.log(JSON.stringify(space_definition, null, 2));
+var exportSpace = function(spaceId) {
+  var spaceDefinition = { };
+  var endPoint = config.baseUrl + "spaces/" + spaceId;
+
+  client.get(endPoint, function (data, response) {
+                         spaceDefinition = removeIds([ data ])[0];
+                         exportCharts(spaceId, function(data) {
+                           spaceDefinition.charts = removeIds(data);
+                           console.log(JSON.stringify(spaceDefinition, null, 2));
                          });
-           });
+                       });
+}
+
+exportSpace(args[0]);
