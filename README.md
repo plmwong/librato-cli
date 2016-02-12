@@ -2,6 +2,12 @@
 
 _librato-cli_ is a command-line tool interacting with the Librato API (https://www.librato.com/docs/api).
 
+## Features ##
+* Listing of sources, metrics, spaces and charts
+* Changing attributes on individual metrics
+* Import/export of individual charts
+* Import/export of entire spaces
+
 ## Getting Started ##
 ```
 npm install
