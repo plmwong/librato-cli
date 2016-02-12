@@ -12,6 +12,11 @@ if (args.length < 1) {
   process.exit(1);
 }
 
+var printResponse = function (data, response) {
+   console.log(response.statusCode + ': ' + response.statusMessage);
+   console.log(JSON.stringify(data, null, 2));
+};
+
 var importCharts = function(spaceId, charts) {
   for(var i = 0; i < charts.length; i++) {
     var newChartPayload = {
@@ -20,13 +25,9 @@ var importCharts = function(spaceId, charts) {
     };
 
     var endPoint = config.baseUrl + "spaces/" + spaceId + "/charts";
-    client.post(endPoint, newChartPayload,
-               function (data, response) {
-                  console.log(response.statusCode + ': ' + response.statusMessage);
-                  console.log(JSON.stringify(data, null, 2));
-               });
+    client.post(endPoint, newChartPayload, printResponse);
   }
-}
+};
 
 var importSpace = function(spaceDefinition) {
   var newSpacePayload = {
@@ -43,6 +44,6 @@ var importSpace = function(spaceDefinition) {
                 var newSpaceId = data.id;
                 importCharts(newSpaceId, spaceDefinition.charts);
              });
-}
+};
 
 importSpace(JSON.parse(args[0]));

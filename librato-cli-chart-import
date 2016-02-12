@@ -22,6 +22,6 @@ var importSpace = function(spaceId, chartDefinition) {
                                    console.log(response.statusCode + ': ' + response.statusMessage);
                                    console.log(JSON.stringify(data, null, 2));
                                  });
-}
+};
 
 importSpace(args[0], args[1]);

@@ -23,14 +23,14 @@ var removeIds = function(data) {
   }
 
   return data;
-}
+};
 
 var exportCharts = function(spaceId, callback) {
   var endPoint = config.baseUrl + "spaces/" + spaceId + "/charts";
   client.get(endPoint, function (data, response) {
                          callback(data);
                        });
-}
+};
 
 var exportSpace = function(spaceId) {
   var spaceDefinition = { };
@@ -43,6 +43,6 @@ var exportSpace = function(spaceId) {
                            console.log(JSON.stringify(spaceDefinition, null, 2));
                          });
                        });
-}
+};
 
 exportSpace(args[0]);

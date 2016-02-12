@@ -38,6 +38,6 @@ var updateAttributes = function(metricName, attributes) {
                                   console.log(response.statusCode + ': ' + response.statusMessage);
                                   console.log(JSON.stringify(data, null, 2));
                                 });
-}
+};
 
 updateAttributes(args[0], args.slice(1));

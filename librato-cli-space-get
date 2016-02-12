@@ -13,10 +13,10 @@ if (!args.length) {
 }
 
 var getSpace = function(spaceId) {
-  var spaceId = config.baseUrl + "spaces/" + spaceId;
-  client.get(spaceId, function printResponse(data, response) {
+  var endPoint = config.baseUrl + "spaces/" + spaceId;
+  client.get(endPoint, function printResponse(data, response) {
                         console.log(JSON.stringify(data, null, 2));
                       });
-}
+};
 
 getSpace(args[0]);

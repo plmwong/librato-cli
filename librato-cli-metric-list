@@ -12,7 +12,7 @@ var listMetrics = function(filter) {
   client.get(endPoint, function (data, response) {
                          console.log(JSON.stringify(data, null, 2));
                        });
-}
+};
 
 if (args.length) {
   listMetrics(args[0]);
