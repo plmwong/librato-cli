@@ -28,6 +28,10 @@ _librato-cli_ requires a token and API key to access the API. You can generate t
 ## Usage ##
 
 ```bash
+#set the token / apikey for librato-cli
+./librato-cli config settoken footoken
+./librato-cli config setapikey barapikey
+
 #list all charts on the space with id 12345
 ./librato-cli chart list 12345
 

@@ -7,4 +7,5 @@ program
   .command('metric', 'manage librato metrics')
   .command('source', 'manage librato sources')
   .command('space', 'manage librato spaces')
+  .command('config', 'configure librato-cli')
   .parse(process.argv);

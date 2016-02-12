@@ -1,0 +1,14 @@
+#!/usr/bin/env node
+var config = require('./modules/librato-cli-config');
+
+var program = require('commander');
+
+program.parse(process.argv);
+var args = program.args;
+
+if (args.length < 1) {
+  console.error('No API key specified, nothing changed');
+  process.exit(1);
+}
+
+config.setApiKey(args[0]);

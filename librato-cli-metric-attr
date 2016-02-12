@@ -6,12 +6,12 @@ var program = require('commander');
 program.parse(process.argv);
 var args = program.args;
 
-if (attributes.length < 1) {
+if (args.length < 1) {
   console.error('You must specify the full metric name of the metric you wish to alter');
   process.exit(1);
 }
 
-if (attributes.length < 2) {
+if (args.length < 2) {
   console.error('No attributes were specified, nothing was done');
   process.exit(1);
 }
