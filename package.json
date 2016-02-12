@@ -2,7 +2,10 @@
   "name": "librato-cli",
   "description": "Command-line interface for interacting with Librato",
   "version": "0.0.1",
+  "author": "Phillip Wong <wongphil@gmail.com>",
+  "license": "MIT",
   "private": true,
+  "analyze": true,
   "dependencies": {
     "commander": "^2.9.0",
     "node-rest-client": "^1.8.0"
