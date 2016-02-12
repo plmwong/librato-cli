@@ -9,7 +9,7 @@ _librato-cli_ is a command-line tool interacting with the Librato API (https://w
 * Import/export of entire spaces
 
 ## Getting Started ##
-```
+```bash
 npm install
 ./librato-cli help
 ```
@@ -27,7 +27,7 @@ _librato-cli_ requires a token and API key to access the API. You can generate t
 
 ## Usage ##
 
-```
+```bash
 #list all charts on the space with id 12345
 ./librato-cli chart list 12345
 
@@ -61,3 +61,7 @@ _librato-cli_ requires a token and API key to access the API. You can generate t
 #import that space definition as a brand new space
 ./librato-cli space import "$(cat test.json)"
 ```
+
+## Legal ##
+
+_librato-cli_ is made available as-is under _The MIT License_. See the LICENSE file for full license details.
