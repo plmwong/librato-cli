@@ -19,9 +19,9 @@ _librato-cli_ requires a token and API key to access the API. You can generate t
 
 ```json
 {
-  "librato_token" : "<your_token>",
-  "librato_apikey" : "<your_api_key>",
-  "base_url" : "https://metrics-api.librato.com/v1/"
+  "libratoToken" : "<your_token>",
+  "libratoApiKey" : "<your_api_key>",
+  "baseUrl" : "https://metrics-api.librato.com/v1/"
 }
 ```
 
