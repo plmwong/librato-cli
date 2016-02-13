@@ -1,6 +1,6 @@
 var proxyquire  =  require('proxyquire').noPreserveCache();
 
-describe('when obtaining a list of sources', function() {
+describe('when obtaining a list of annotations', function() {
   var output, calledEndPoint;
 
   beforeEach(function() {
@@ -14,15 +14,15 @@ describe('when obtaining a list of sources', function() {
 
     console.log = function(msg) { output = msg; };
 
-    proxyquire('../librato-cli-source-list',
+    proxyquire('../librato-cli-annotate-list',
             { './modules/librato-cli-client': mockClient, './modules/librato-cli-config': { baseUrl: '' } });
   });
 
-  it('should call /sources resource on librato api', function() {
-    expect(calledEndPoint).toEqual('sources');
+  it('should call /annotations resource on librato api', function() {
+    expect(calledEndPoint).toEqual('annotations');
   });
 
-  it('should print out the response from the /sources resource', function() {
+  it('should print out the response from the /annotations resource', function() {
     expect(output).toEqual('{\n  "foo": "bar"\n}');
   });
 });

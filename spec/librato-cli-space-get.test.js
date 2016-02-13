@@ -1,6 +1,6 @@
 var proxyquire  =  require('proxyquire').noPreserveCache();
 
-describe('when obtaining a list of spaces', function() {
+describe('when obtaining a particular space', function() {
   var output, calledEndPoint;
 
   beforeEach(function() {
@@ -11,15 +11,20 @@ describe('when obtaining a list of spaces', function() {
             handler(testResponse, { });
           }
         };
+    var mockProgram = {
+        parse: function() { },
+        args: [ '1234' ]
+      };
 
     console.log = function(msg) { output = msg; };
 
-    proxyquire('../librato-cli-space-list',
-            { './modules/librato-cli-client': mockClient, './modules/librato-cli-config': { baseUrl: '' } });
+    proxyquire('../librato-cli-space-get',
+            { './modules/librato-cli-client': mockClient, './modules/librato-cli-config': { baseUrl: '' },
+              'commander': mockProgram });
   });
 
-  it('should call /spaces resource on librato api', function() {
-    expect(calledEndPoint).toEqual('spaces');
+  it('should call /spaces resource on librato api for the specified space', function() {
+    expect(calledEndPoint).toEqual('spaces/1234');
   });
 
   it('should print out the response from the /spaces resource', function() {
