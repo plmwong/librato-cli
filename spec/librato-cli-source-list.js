@@ -1,29 +1,36 @@
-var mock = require('mock-require');
+describe('when obtaining a list of sources', function(){
+  var mock = require('mock-require');
+  var sourceListCommand, output, calledEndPoint;
 
-describe("when obtaining a list of sources", function(){
-  var output;
-
-  beforeEach(function(done) {
+  beforeEach(function() {
     var testResponse = { foo: "bar" };
 
-    mock('../modules/librato-cli-config', { });
+    mock('../modules/librato-cli-config', { baseUrl: '' });
     mock('node-rest-client',
       {
         Client: function() {
           return {
             get: function(endPoint, handler) {
+              calledEndPoint = endPoint;
               handler(testResponse, { });
-              done();
             }
           };
         }
       });
     console.log = function(msg) { output = msg; };
 
-    require("../librato-cli-source-list");
+    sourceListCommand = require('../librato-cli-source-list');
   });
 
-  it("should print out the response from the sources resource", function() {
+  afterEach(function() {
+    mock.stopAll();
+  });
+
+  it('should call /sources resource on librato api', function() {
+    expect(calledEndPoint).toEqual('sources');
+  });
+
+  it('should print out the response from the /sources resource', function() {
     expect(output).toEqual('{\n  "foo": "bar"\n}');
   });
 });

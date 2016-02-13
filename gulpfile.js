@@ -17,8 +17,8 @@ gulp.task('test', function () {
 		.pipe(jasmine({ verbose: true }));
 });
 
-gulp.task('watch', ['lint', 'test'], function() {
-  gulp.watch(['./librato-cli-*', './modules/*'], ['lint']);
+gulp.task('watch', function() {
+  gulp.watch(['./librato-cli-*', './modules/*', './spec/*.js'], ['lint', 'test']);
   gutil.log(gutil.colors.bgBlue('Watching for changes to nodejs files...'));
 });
 
