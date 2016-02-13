@@ -4,6 +4,6 @@ var client = require('./modules/librato-cli-client');
 
 var endPoint = config.baseUrl + "sources";
 client.get(endPoint,
-           function (data, response) {
+           function printResponse(data, response) {
               console.log(JSON.stringify(data, null, 2));
            });

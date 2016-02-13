@@ -7,7 +7,7 @@ var jshint = require('gulp-jshint');
 var jasmine = require('gulp-jasmine');
 
 gulp.task('lint', function() {
-  gulp.src(['./librato-cli-*', './modules/*'])
+  gulp.src(['./librato-cli-*', './modules/*', './spec/*.js'])
     .pipe(jshint())
     .pipe(jshint.reporter('jshint-stylish'));
 });
