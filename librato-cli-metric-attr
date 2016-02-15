@@ -33,7 +33,7 @@ var updateAttributes = function(metricName, attributes) {
     headers: { "Content-Type": "application/x-www-form-urlencoded" }
   };
 
-  var endPoint = config.baseUrl + "metrics/" + metric_name;
+  var endPoint = config.baseUrl + "metrics/" + metricName;
   client.put(endPoint, payload, function (data, response) {
                                   console.log(response.statusCode + ': ' + response.statusMessage);
                                   console.log(JSON.stringify(data, null, 2));
