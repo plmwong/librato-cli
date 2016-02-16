@@ -1,14 +1,14 @@
 #!/usr/bin/env node
 var config = require('./modules/librato-cli-config');
 var client = require('./modules/librato-cli-client');
+var flow = require('./modules/librato-cli-flow');
 var program = require('commander');
 
 program.parse(process.argv);
 var args = program.args;
 
 if (args.length < 1) {
-  console.error('You must specify a space definition to import a space');
-  process.exitCode = 1;
+  flow.error('You must specify a space definition to import a space');
   return;
 }
 

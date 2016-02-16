@@ -12,7 +12,7 @@ describe('when importing a space, but the space definition has not been specifie
     console.log = function(msg) { output = msg; };
     console.error = function(msg) { output = msg; };
 
-    proxyquire('../librato-cli-space-import', { 'commander': mockProgram });
+    proxyquire('../librato-cli-space-import', { 'commander': mockProgram, './modules/librato-cli-flow': { error: function(msg) { output = msg; } } });
   });
 
   it('should stop and tell the user to provide a space definition', function() {

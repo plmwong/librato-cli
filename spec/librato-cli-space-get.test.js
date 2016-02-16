@@ -12,7 +12,7 @@ describe('when obtaining a particular space, but the space id has not been speci
     console.log = function(msg) { output = msg; };
     console.error = function(msg) { output = msg; };
 
-    proxyquire('../librato-cli-space-get', { 'commander': mockProgram });
+    proxyquire('../librato-cli-space-get', { 'commander': mockProgram, './modules/librato-cli-flow': { error: function(msg) { output = msg; } } });
   });
 
   it('should stop and tell the user to provide a space id', function() {

@@ -12,7 +12,7 @@ describe('when exporting a chart, but the space id has not been specified', func
     console.log = function(msg) { output = msg; };
     console.error = function(msg) { output = msg; };
 
-    proxyquire('../librato-cli-chart-export', { 'commander': mockProgram });
+    proxyquire('../librato-cli-chart-export', { 'commander': mockProgram, './modules/librato-cli-flow': { error: function(msg) { output = msg; } } });
   });
 
   it('should stop and tell the user to provide a space id', function() {
@@ -32,7 +32,7 @@ describe('when exporting a chart, but the chart id has not been specified', func
     console.log = function(msg) { output = msg; };
     console.error = function(msg) { output = msg; };
 
-    proxyquire('../librato-cli-chart-export', { 'commander': mockProgram });
+    proxyquire('../librato-cli-chart-export', { 'commander': mockProgram, './modules/librato-cli-flow': { error: function(msg) { output = msg; } } });
   });
 
   it('should stop and tell the user to provide a chart id', function() {

@@ -12,7 +12,7 @@ describe('when updating a metric, but no metric name has been given', function()
     console.log = function(msg) { output = msg; };
     console.error = function(msg) { output = msg; };
 
-    proxyquire('../librato-cli-metric-attr', { 'commander': mockProgram });
+    proxyquire('../librato-cli-metric-attr', { 'commander': mockProgram, './modules/librato-cli-flow': { error: function(msg) { output = msg; } } });
   });
 
   it('should stop and tell the user to provide a metric name', function() {
@@ -32,7 +32,7 @@ describe('when updating a metric, but no attribute changes have been specified',
     console.log = function(msg) { output = msg; };
     console.error = function(msg) { output = msg; };
 
-    proxyquire('../librato-cli-metric-attr', { 'commander': mockProgram });
+    proxyquire('../librato-cli-metric-attr', { 'commander': mockProgram, './modules/librato-cli-flow': { error: function(msg) { output = msg; } } });
   });
 
   it('should stop and tell the user to provide some attribute changes', function() {
