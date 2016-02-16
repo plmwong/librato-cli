@@ -1,5 +1,25 @@
 var proxyquire  =  require('proxyquire').noPreserveCache();
 
+describe('when obtaining a particular space, but the space id has not been specified', function() {
+  var output;
+
+  beforeEach(function() {
+    var mockProgram = {
+        parse: function() { },
+        args: [ ]
+      };
+
+    console.log = function(msg) { output = msg; };
+    console.error = function(msg) { output = msg; };
+
+    proxyquire('../librato-cli-space-get', { 'commander': mockProgram });
+  });
+
+  it('should stop and tell the user to provide a space id', function() {
+    expect(output).toEqual('You must specify a space id');
+  });
+});
+
 describe('when obtaining a particular space', function() {
   var output, calledEndPoint;
 
