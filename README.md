@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/plmwong/librato-cli.svg?branch=master)](https://travis-ci.org/plmwong/librato-cli)
 
-_librato-cli_ is a command-line tool interacting with the Librato API (https://www.librato.com/docs/api).
+_librato-cli_ is a command-line tool for interacting with the Librato API (https://www.librato.com/docs/api).
 
 ## Features ##
 * Listing of sources, metrics, spaces and charts

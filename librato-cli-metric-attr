@@ -8,12 +8,14 @@ var args = program.args;
 
 if (args.length < 1) {
   console.error('You must specify the full metric name of the metric you wish to alter');
-  process.exit(1);
+  process.exitCode = 1;
+  return;
 }
 
 if (args.length < 2) {
   console.error('No attributes were specified, nothing was done');
-  process.exit(1);
+  process.exitCode = 1;
+  return;
 }
 
 var updateAttributes = function(metricName, attributes) {
@@ -40,4 +42,4 @@ var updateAttributes = function(metricName, attributes) {
                                 });
 };
 
-updateAttributes(args[0], args.slice(1));
+updateAttributes(args[0], args.slice(0));

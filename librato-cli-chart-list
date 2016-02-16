@@ -8,7 +8,8 @@ var args = program.args;
 
 if (!args.length) {
   console.error('You must specify the space id to list its charts');
-  process.exit(1);
+  process.exitCode = 1;
+  return;
 }
 
 var listCharts = function(spaceId) {

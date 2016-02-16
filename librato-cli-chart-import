@@ -8,7 +8,8 @@ var args = program.args;
 
 if (args.length < 2) {
   console.error('You must specify a space id to import to chart in to');
-  process.exit(1);
+  process.exitCode = 1;
+  return;
 }
 
 var importSpace = function(spaceId, chartDefinition) {
