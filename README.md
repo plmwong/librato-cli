@@ -52,6 +52,9 @@ _librato-cli_ requires a token and API key to access the API. You can generate t
 #list metrics that match the 'foo.bar' filter pattern
 ./librato-cli metric list foo.bar
 
+#get measures from 4 hours ago for a metric
+./librato-cli-metric-get foo.bar 14400
+
 #update metric named 'foo.bar', setting its summarize function to use summation
 ./librato-cli attr foo.bar summarize_function=sum
 

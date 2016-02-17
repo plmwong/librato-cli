@@ -3,5 +3,6 @@ var program = require('commander');
 program
   .version('0.0.1')
   .command('list [filter]', 'list librato metrics')
+  .command('get [metric_name] [duration]', 'get measurements for a metric')
   .command('attr [metric_name] [key=value]', 'change a metrics attributes')
   .parse(process.argv);
