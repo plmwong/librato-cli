@@ -41,13 +41,18 @@ describe('when obtaining measurements for metric, but no duration has been provi
 });
 
 describe('when obtaining measurements for metric', function() {
-  var output, calledEndPoint;
+  var output;
+  var calledEndPoints = [];
+  var getCallsMade = true;
 
   beforeEach(function() {
-    var testResponse = { foo: "bar" };
+    var testResponse = { foo: "bar", query: { next_time: 12345 } };
     var mockClient = {
           get: function(endPoint, handler) {
-            calledEndPoint = endPoint;
+            if (calledEndPoints.length > 0) {
+              delete testResponse.query;
+            }
+            calledEndPoints.push(endPoint);
             handler(testResponse, { });
           }
         };
@@ -73,8 +78,12 @@ describe('when obtaining measurements for metric', function() {
               'commander': mockProgram, 'moment': mockMoment, './modules/librato-cli-flow': { error: function(msg) { output = msg; } } });
   });
 
-  it('should call to the metric in the /metrics resource on librato api', function() {
-    expect(calledEndPoint).toEqual('metrics/metric-name?start_time=1&end_time=1&resolution=60');
+  it('should make a first call to the metric using the specified start and end times', function() {
+    expect(calledEndPoints[0]).toEqual('metrics/metric-name?start_time=1&end_time=1&resolution=60');
+  });
+
+  it('should make an additional call to the metric for any query start time returned from the api', function() {
+    expect(calledEndPoints[0]).toEqual('metrics/metric-name?start_time=1&end_time=1&resolution=60');
   });
 
   it('should print out the response from the /spaces resource', function() {

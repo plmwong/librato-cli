@@ -16,7 +16,7 @@ describe('when updating a metric, but no metric name has been given', function()
   });
 
   it('should stop and tell the user to provide a metric name', function() {
-    expect(output).toEqual('You must specify the full metric name of the metric you wish to alter');
+    expect(output).toEqual('You must specify the metric name or pattern of the metric you wish to alter');
   });
 });
 

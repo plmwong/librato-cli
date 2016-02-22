@@ -18,13 +18,23 @@ if (args.length < 2) {
   return;
 }
 
-var getMetric = function(metricName, numberOfSeconds) {
+var getMetricOverSpan = function(metricName, startTime, endTime) {
   var endPoint = config.baseUrl + "metrics/" + metricName +
-    "?start_time=" + moment().subtract(numberOfSeconds, 'seconds').unix() +
-    "&end_time=" + moment().unix() + "&resolution=60";
+    "?start_time=" + startTime +
+    "&end_time=" + endTime + "&resolution=60";
   client.get(endPoint, function (data, response) {
                          console.log(JSON.stringify(data, null, 2));
+                         if (data.query && data.query.next_time) {
+                           getMetricOverSpan(metricName, data.query.next_time, endTime);
+                         }
                        });
+};
+
+var getMetric = function(metricName, numberOfSeconds) {
+  var startTime = moment().subtract(numberOfSeconds, 'seconds').unix();
+  var endTime = moment().unix();
+
+  getMetricOverSpan(metricName, startTime, endTime);
 };
 
 getMetric(args[0], args[1]);

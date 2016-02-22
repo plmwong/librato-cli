@@ -8,7 +8,7 @@ program.parse(process.argv);
 var args = program.args;
 
 if (args.length < 1) {
-  flow.error('You must specify the full metric name of the metric you wish to alter');
+  flow.error('You must specify the metric name or pattern of the metric you wish to alter');
   return;
 }
 
@@ -16,6 +16,17 @@ if (args.length < 2) {
   flow.error('No attributes were specified, nothing was done');
   return;
 }
+
+var getMatchingMetrics = function(metricName, attributes) {
+  var endPoint = config.baseUrl + "metrics?name=" + metricName;
+  client.get(endPoint, function (data, response) {
+                         for (var i = 0; i < data.metrics; i++) {
+                           var metric = data.metrics[i];
+                           console.log('Updating: ' + metric.name);
+                           updateAttributes(metric.name, attributes);
+                         }
+                       });
+};
 
 var updateAttributes = function(metricName, attributes) {
   var attributeData = '';
