@@ -16,7 +16,7 @@ describe('when exporting a chart, but the space id has not been specified', func
   });
 
   it('should stop and tell the user to provide a space id', function() {
-    expect(output).toEqual('You must specify a space id and a chart id to export');
+    expect(output).toEqual('You must specify the chart id and the space id of the space it is contained in to export it');
   });
 });
 
@@ -36,7 +36,7 @@ describe('when exporting a chart, but the chart id has not been specified', func
   });
 
   it('should stop and tell the user to provide a chart id', function() {
-    expect(output).toEqual('You must specify a space id and a chart id to export');
+    expect(output).toEqual('You must specify the chart id and the space id of the space it is contained in to export it');
   });
 });
 

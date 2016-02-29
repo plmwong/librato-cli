@@ -8,7 +8,7 @@ program.parse(process.argv);
 var args = program.args;
 
 if (args.length < 2) {
-  flow.error('You must specify a space id and a chart id to export');
+  flow.error('You must specify the chart id and the space id of the space it is contained in to export it');
   return;
 }
 
@@ -23,7 +23,7 @@ var removeIdsFromChart = function(chartDefinition) {
 };
 
 var exportSpace = function(spaceId, chart) {
-  var endPoint = config.baseUrl + "spaces/" + spaceId + "/charts/" + chart;
+  var endPoint = config.baseUrl + 'spaces/' + spaceId + '/charts/' + chart;
   client.get(endPoint, function(data, response) {
                          console.log(JSON.stringify(removeIdsFromChart(data), null, 2));
                        });

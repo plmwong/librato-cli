@@ -15,10 +15,10 @@ if (args.length < 2) {
 var importSpace = function(spaceId, chartDefinition) {
   var payload = {
     data: JSON.parse(chartDefinition),
-    headers: { "Content-Type": "application/json" }
+    headers: { 'Content-Type': 'application/json' }
   };
 
-  var endPoint = config.baseUrl + "spaces/" + spaceId + "/charts";
+  var endPoint = config.baseUrl + 'spaces/' + spaceId + '/charts';
   client.post(endPoint, payload, function (data, response) {
                                    console.log(response.statusCode + ': ' + response.statusMessage);
                                    console.log(JSON.stringify(data, null, 2));

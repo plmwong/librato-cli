@@ -21,10 +21,10 @@ var importCharts = function(spaceId, charts) {
   for(var i = 0; i < charts.length; i++) {
     var newChartPayload = {
         data: charts[i],
-        headers: { "Content-Type": "application/json" }
+        headers: { 'Content-Type': 'application/json' }
     };
 
-    var endPoint = config.baseUrl + "spaces/" + spaceId + "/charts";
+    var endPoint = config.baseUrl + 'spaces/' + spaceId + '/charts';
     client.post(endPoint, newChartPayload, printResponse);
   }
 };
@@ -32,10 +32,10 @@ var importCharts = function(spaceId, charts) {
 var importSpace = function(spaceDefinition) {
   var newSpacePayload = {
     data: JSON.stringify({ name: spaceDefinition.name }),
-    headers: { "Content-Type": "application/json" }
+    headers: { 'Content-Type': 'application/json' }
   };
 
-  var endPoint = config.baseUrl + "spaces";
+  var endPoint = config.baseUrl + 'spaces';
   client.post(endPoint, newSpacePayload,
              function (data, response) {
                 console.log(response.statusCode + ': ' + response.statusMessage);

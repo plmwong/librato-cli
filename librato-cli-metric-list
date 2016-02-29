@@ -7,7 +7,7 @@ program.parse(process.argv);
 var args = program.args;
 
 var listMetrics = function(filter) {
-  var endPoint = config.baseUrl + "metrics?name=" + filter;
+  var endPoint = config.baseUrl + 'metrics?name=' + filter;
   client.get(endPoint, function (data, response) {
                          console.log(JSON.stringify(data, null, 2));
                        });

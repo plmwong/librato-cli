@@ -2,5 +2,5 @@
 var program = require('commander');
 program
   .version('0.0.1')
-  .command('list', 'list librato sources')
+  .command('list', 'list all sources which have been used to report metrics to librato')
   .parse(process.argv);

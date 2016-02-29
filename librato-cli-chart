@@ -2,7 +2,7 @@
 var program = require('commander');
 program
   .version('0.0.1')
-  .command('list [space_id]', 'list librato charts on a space')
-  .command('export [space_id] [chart_id]', 'export the definition for a chart')
-  .command('import [space_id] [chart_definition_json]', 'import the definition for a chart into a target space')
+  .command('list [space id]', 'list all charts that are contained in the specified space')
+  .command('export [space id] [chart id]', 'export the specified chart''s definition in JSON')
+  .command('import [space id] [chart definition]', 'imports a JSON chart definition into the specified space')
   .parse(process.argv);

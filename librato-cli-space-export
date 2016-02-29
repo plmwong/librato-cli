@@ -27,7 +27,7 @@ var removeIds = function(data) {
 };
 
 var exportCharts = function(spaceId, callback) {
-  var endPoint = config.baseUrl + "spaces/" + spaceId + "/charts";
+  var endPoint = config.baseUrl + 'spaces/' + spaceId + '/charts';
   client.get(endPoint, function (data, response) {
                          callback(data);
                        });
@@ -35,7 +35,7 @@ var exportCharts = function(spaceId, callback) {
 
 var exportSpace = function(spaceId) {
   var spaceDefinition = { };
-  var endPoint = config.baseUrl + "spaces/" + spaceId;
+  var endPoint = config.baseUrl + 'spaces/' + spaceId;
 
   client.get(endPoint, function (data, response) {
                          spaceDefinition = removeIds([ data ])[0];
