@@ -12,7 +12,7 @@ describe('when updating a metric, but no metric name has been given', function()
     console.log = function(msg) { output = msg; };
     console.error = function(msg) { output = msg; };
 
-    proxyquire('../librato-cli-metric-attr', { 'commander': mockProgram, './modules/librato-cli-flow': { error: function(msg) { output = msg; } } });
+    proxyquire('../librato-cli-metric-update-attr', { 'commander': mockProgram, './modules/librato-cli-flow': { error: function(msg) { output = msg; } } });
   });
 
   it('should stop and tell the user to provide a metric name', function() {
@@ -32,7 +32,7 @@ describe('when updating a metric, but no attribute changes have been specified',
     console.log = function(msg) { output = msg; };
     console.error = function(msg) { output = msg; };
 
-    proxyquire('../librato-cli-metric-attr', { 'commander': mockProgram, './modules/librato-cli-flow': { error: function(msg) { output = msg; } } });
+    proxyquire('../librato-cli-metric-update-attr', { 'commander': mockProgram, './modules/librato-cli-flow': { error: function(msg) { output = msg; } } });
   });
 
   it('should stop and tell the user to provide some attribute changes', function() {
@@ -50,6 +50,9 @@ describe('when changing attributes on a metric', function() {
             calledEndPoint = endPoint;
             calledPayload = data;
             handler({ }, data, { });
+          },
+          get: function(endPoint, handler) {
+            handler({ metrics: [ { name: "metric-name" } ] }, { });
           }
         };
     var mockProgram = {
@@ -59,7 +62,7 @@ describe('when changing attributes on a metric', function() {
 
     console.log = function(msg) { output = msg; };
 
-    proxyquire('../librato-cli-metric-attr',
+    proxyquire('../librato-cli-metric-update-attr',
             { './modules/librato-cli-client': mockClient, './modules/librato-cli-config': { baseUrl: '' },
               'commander': mockProgram });
   });

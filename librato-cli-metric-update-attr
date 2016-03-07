@@ -20,9 +20,9 @@ if (args.length < 2) {
 var getMatchingMetrics = function(metricName, attributes) {
   var endPoint = config.baseUrl + 'metrics?name=' + metricName;
   client.get(endPoint, function (data, response) {
-                         for (var i = 0; i < data.metrics; i++) {
+                         for (var i = 0; i < data.metrics.length; i++) {
                            var metric = data.metrics[i];
-                           console.log('Updating: ' + metric.name);
+                           console.log('Updating attributes for: ' + metric.name);
                            updateAttributes(metric.name, attributes);
                          }
                        });
@@ -52,4 +52,4 @@ var updateAttributes = function(metricName, attributes) {
                                 });
 };
 
-updateAttributes(args[0], args.slice(0));
+getMatchingMetrics(args[0], args.slice(0));
