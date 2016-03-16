@@ -1,8 +1,9 @@
 var filesystem = require('fs');
 var config = { baseUrl: 'https://metrics-api.librato.com/v1/' };
 try {
-  config = JSON.parse(filesystem.readFileSync('config.json'));
+  config = JSON.parse(filesystem.readFileSync(__dirname + '/../config.json'));
 } catch (err) {
+  console.error('Could not read config file at ' + __dirname + '/../config.json');
 }
 
 var saveConfig = function() {
