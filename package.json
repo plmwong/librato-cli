@@ -1,10 +1,22 @@
 {
   "name": "librato-cli",
-  "description": "Command-line interface for interacting with Librato",
-  "version": "0.0.1",
+  "description": "Command-line interface for interacting with the Librato API",
+  "version": "0.1.0",
   "author": "Phillip Wong <wongphil@gmail.com>",
+  "keywords": [
+    "librato",
+    "command-line"
+  ],
+  "scripts": {
+    "test": "gulp test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/plmwong/librato-cli"
+  },
   "license": "MIT",
   "private": true,
+  "preferGlobal": true,
   "analyze": true,
   "dependencies": {
     "commander": "^2.9.0",
