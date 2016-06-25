@@ -25,6 +25,7 @@ var importCharts = function(spaceId, charts) {
     };
 
     var endPoint = config.baseUrl + 'spaces/' + spaceId + '/charts';
+
     client.post(endPoint, newChartPayload, printResponse);
   }
 };
@@ -38,8 +39,7 @@ var importSpace = function(spaceDefinition) {
   var endPoint = config.baseUrl + 'spaces';
   client.post(endPoint, newSpacePayload,
              function (data, response) {
-                console.log(response.statusCode + ': ' + response.statusMessage);
-                console.log(JSON.stringify(data, null, 2));
+                printResponse(data, response);
 
                 var newSpaceId = data.id;
                 importCharts(newSpaceId, spaceDefinition.charts);

@@ -12,6 +12,22 @@ if (args.length < 1) {
   return;
 }
 
+var removeConflictingCompositeMetrics = function(data) {
+  for(var i = 0; i < data.length; i++) {
+    if (data[i].streams) {
+      for(var j = 0; j < data[j].streams.length; j++) {
+        if (data[i].streams[j].metric && data[i].streams[j].composite) {
+          delete data[i].streams[j].metric;
+          delete data[i].streams[j].source;
+          delete data[i].streams[j].group_function;
+        }
+      }
+    }
+  }
+
+  return data;
+};
+
 var removeIds = function(data) {
   for(var i = 0; i < data.length; i++) {
     delete data[i].id;
@@ -40,7 +56,7 @@ var exportSpace = function(spaceId) {
   client.get(endPoint, function (data, response) {
                          spaceDefinition = removeIds([ data ])[0];
                          exportCharts(spaceId, function(data) {
-                           spaceDefinition.charts = removeIds(data);
+                           spaceDefinition.charts = removeConflictingCompositeMetrics(removeIds(data));
                            console.log(JSON.stringify(spaceDefinition, null, 2));
                          });
                        });
