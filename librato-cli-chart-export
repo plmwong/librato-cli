@@ -16,8 +16,8 @@ var removeConflictingCompositeMetrics = function(chartDefinition) {
   for(var i = 0; i < chartDefinition.streams.length; i++) {
     if (chartDefinition.streams[i].metric && chartDefinition.streams[i].composite) {
       delete chartDefinition.streams[i].metric;
-      delete data[i].streams[j].source;
-      delete data[i].streams[j].group_function;
+      delete chartDefinition.streams[i].source;
+      delete chartDefinition.streams[i].group_function;
     }
   }
 
