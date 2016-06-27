@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 var program = require('commander');
 program
-  .version('0.0.1')
+  .version('0.2.0')
   .command('list [filter]', 'list all librato metrics matching the optional wildcard pattern (leave empty for all)')
   .command('get [metric name] [duration]', 'get measurements for a metric which have been reported within a duration')
   .command('update [metric name] [key=value]', 'change the properties for one or more metrics matching a wildcard pattern')

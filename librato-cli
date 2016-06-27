@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 var program = require('commander');
 program
-  .version('0.0.1')
+  .version('0.2.0')
   .command('annotate', 'manage librato annotations/events')
   .command('chart', 'manage librato charts')
   .command('metric', 'manage librato metrics')

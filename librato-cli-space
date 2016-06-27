@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 var program = require('commander');
 program
-  .version('0.0.1')
+  .version('0.2.0')
   .command('list', 'list all librato spaces')
   .command('get [space id]', 'get definition for a librato space')
   .command('byname [terms]', 'get definition for a librato space by its name')
