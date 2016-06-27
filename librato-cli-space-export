@@ -15,7 +15,7 @@ if (args.length < 1) {
 var removeConflictingCompositeMetrics = function(data) {
   for(var i = 0; i < data.length; i++) {
     if (data[i].streams) {
-      for(var j = 0; j < data[j].streams.length; j++) {
+      for(var j = 0; j < data[i].streams.length; j++) {
         if (data[i].streams[j].metric && data[i].streams[j].composite) {
           delete data[i].streams[j].metric;
           delete data[i].streams[j].source;
