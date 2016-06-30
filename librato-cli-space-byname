@@ -1,4 +1,6 @@
 #!/usr/bin/env node
+'use strict';
+
 var config = require('./modules/librato-cli-config');
 var client = require('./modules/librato-cli-client');
 var flow = require('./modules/librato-cli-flow');
@@ -14,7 +16,7 @@ if (!args.length) {
 
 var endPoint = config.baseUrl + 'spaces';
 client.get(endPoint, function printResponse(data, response) {
-                       for (s in data.spaces) {
+                       for (var s in data.spaces) {
                          if (data.spaces[s].name == args[0]) {
                            console.log(JSON.stringify(data.spaces[s], null, 2));
                          }

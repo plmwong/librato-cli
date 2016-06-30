@@ -1,4 +1,6 @@
 #!/usr/bin/env node
+'use strict';
+
 var config = require('./modules/librato-cli-config');
 var client = require('./modules/librato-cli-client');
 var program = require('commander');

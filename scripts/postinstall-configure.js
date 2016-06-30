@@ -1,4 +1,6 @@
 #!/usr/bin/env node
+'use strict';
+
 var config = require('../modules/librato-cli-config');
 var os = require('os');
 var readline = require('readline');

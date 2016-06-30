@@ -1,4 +1,6 @@
 #!/usr/bin/env node
+'use strict';
+
 var config = require('./modules/librato-cli-config');
 var client = require('./modules/librato-cli-client');
 var flow = require('./modules/librato-cli-flow');
@@ -22,7 +24,7 @@ var getMetricOverSpan = function(metricName, startTime, endTime) {
   var endPoint = config.baseUrl + 'metrics/' + metricName +
                   '?start_time=' + startTime +
                   '&end_time=' + endTime + '&resolution=60';
-                  
+
   client.get(endPoint, function (data, response) {
                          console.log(JSON.stringify(data, null, 2));
                          if (data.query && data.query.next_time) {
