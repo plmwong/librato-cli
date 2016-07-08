@@ -20,10 +20,22 @@ if (args.length < 2) {
   return;
 }
 
-var getMetricOverSpan = function(metricName, startTime, endTime) {
+if (args.length < 3) {
+  flow.error('You should supply the source(s) for which to fetch measurements for (e.g. *)');
+  return;
+}
+
+if (args.length < 4) {
+  flow.error('You should supply the resolution for which to fetch measurements for (e.g. 60 seconds)');
+  return;
+}
+
+var getMetricOverSpan = function(metricName, startTime, endTime, source, resolution) {
   var endPoint = config.baseUrl + 'metrics/' + metricName +
                   '?start_time=' + startTime +
-                  '&end_time=' + endTime + '&resolution=60';
+                  '&end_time=' + endTime +
+                  '&source=' + source +
+                  '&resolution=' + resolution;
 
   client.get(endPoint, function (data, response) {
                          console.log(JSON.stringify(data, null, 2));
@@ -33,11 +45,11 @@ var getMetricOverSpan = function(metricName, startTime, endTime) {
                        });
 };
 
-var getMetric = function(metricName, numberOfSeconds) {
+var getMetric = function(metricName, numberOfSeconds, source, resolution) {
   var startTime = moment().subtract(numberOfSeconds, 'seconds').unix();
   var endTime = moment().unix();
 
-  getMetricOverSpan(metricName, startTime, endTime);
+  getMetricOverSpan(metricName, startTime, endTime, source, resolution);
 };
 
-getMetric(args[0], args[1]);
+getMetric(args[0], args[1], args[2], args[3]);
