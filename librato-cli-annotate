@@ -5,4 +5,5 @@ var program = require('commander');
 program
   .version('0.2.0')
   .command('list', 'list all librato annotations')
+  .command('create [annotations_group] [title] [description]', 'create a new annotation/event with the given title and description')
   .parse(process.argv);
