@@ -31,8 +31,14 @@ var importCharts = function(spaceId, charts) {
 };
 
 var importSpace = function(spaceDefinition) {
+  var spaceConfig = { name: spaceDefinition.name };
+
+  if (spaceDefinition.hasOwnProperty('tags')) {
+    spaceConfig['tags'] = spaceDefinition.tags;
+  }
+
   var newSpacePayload = {
-    data: JSON.stringify({ name: spaceDefinition.name }),
+    data: JSON.stringify(spaceConfig),
     headers: { 'Content-Type': 'application/json' }
   };
 
