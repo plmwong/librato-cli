@@ -8,4 +8,5 @@ program
   .command('delete [space_id]', 'remove a librato space')
   .command('export [space_id]', 'export the definition for a space, including the definitions for its charts, as a JSON file')
   .command('import [space_definition]', 'import the definition for a space, as a newly created space')
+  .command('migrate [legacy_space_definition]', 'migrates a legacy metric space to an equivalent tagged metric space')
   .parse(process.argv);
