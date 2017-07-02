@@ -3,11 +3,15 @@ var config = require('./modules/librato-cli-config');
 var client = require('./modules/librato-cli-client');
 var flow = require('./modules/librato-cli-flow');
 var program = require('commander');
+var fs = require('fs');
 
-program.parse(process.argv);
+program
+  .option('-f, --file [space_file]', 'Migrate a space file')
+  .parse(process.argv);
+
 var args = program.args;
 
-if (args.length < 1) {
+if (!program.file && args.length < 1) {
   flow.error('You must specify a space definition to migrate a space');
   return;
 }
@@ -27,4 +31,14 @@ var migrateSpace = function(spaceDefinition) {
   console.log(JSON.stringify(spaceDefinition, null, 2));
 };
 
-migrateSpace(JSON.parse(args[0]));
+if (program.file) {
+  fs.readFile(program.file, 'utf8', function (err, data) {
+    if (err) {
+      return flow.error(err);
+    }
+
+    migrateSpace(JSON.parse(data));
+  });
+} else {
+  migrateSpace(JSON.parse(args[0]));
+}
