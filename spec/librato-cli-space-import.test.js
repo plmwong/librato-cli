@@ -6,6 +6,7 @@ describe('when importing a space, but the space definition has not been specifie
   beforeEach(function() {
     var mockProgram = {
         parse: function() { },
+        option: function() { return { parse: function() { } } },
         args: [ ]
       };
 
@@ -37,6 +38,7 @@ describe('when importing a space', function() {
       };
     var mockProgram = {
         parse: function() { },
+        option: function() { return { parse: function() { } } },
         args: [ JSON.stringify(testSpaceDefinition) ]
       };
 
