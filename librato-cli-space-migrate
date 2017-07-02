@@ -7,6 +7,7 @@ var fs = require('fs');
 
 program
   .option('-f, --file [space_file]', 'Migrate a space file')
+  .option('-s, --suffix [space_suffix]', 'Apply a suffix to the migrated space name')
   .parse(process.argv);
 
 var args = program.args;
@@ -18,6 +19,10 @@ if (!program.file && args.length < 1) {
 
 var migrateSpace = function(spaceDefinition) {
   spaceDefinition.tags = true;
+
+  if (program.suffix) {
+    spaceDefinition.name = spaceDefinition.name + ' ' + program.suffix;
+  }
 
   spaceDefinition.charts.forEach(function(chart) {
     chart.streams.forEach(function(stream){
