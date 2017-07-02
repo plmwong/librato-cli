@@ -3,11 +3,14 @@ var config = require('./modules/librato-cli-config');
 var client = require('./modules/librato-cli-client');
 var flow = require('./modules/librato-cli-flow');
 var program = require('commander');
+var fs = require('fs');
 
-program.parse(process.argv);
+program
+  .option('-f, --file [space_file]', 'Import a space file')
+  .parse(process.argv);
 var args = program.args;
 
-if (args.length < 1) {
+if (!program.file && args.length < 1) {
   flow.error('You must specify a space definition to import a space');
   return;
 }
@@ -52,4 +55,15 @@ var importSpace = function(spaceDefinition) {
              });
 };
 
-importSpace(JSON.parse(args[0]));
+
+if (program.file) {
+  fs.readFile(program.file, 'utf8', function (err, data) {
+    if (err) {
+      return flow.error(err);
+    }
+
+    importSpace(JSON.parse(data));
+  });
+} else {
+  importSpace(JSON.parse(args[0]));
+}
