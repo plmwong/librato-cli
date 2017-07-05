@@ -19,7 +19,7 @@ if (args.length < 2) {
 }
 
 var getMetricOverSpan = function(metricName, startTime, endTime) {
-  var endPoint = config.baseUrl + 'metrics/' + metricName +
+  var endPoint = config.baseUrl + 'v1/metrics/' + metricName +
                   '?start_time=' + startTime +
                   '&end_time=' + endTime + '&resolution=60';
                   

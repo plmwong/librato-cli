@@ -22,7 +22,7 @@ var importMetric = function(metricDefinitions) {
       headers: { 'Content-Type': 'application/json' }
     };
 
-    var endPoint = config.baseUrl + 'metrics/' + metric.name;
+    var endPoint = config.baseUrl + 'v1/metrics/' + metric.name;
     client.put(endPoint, payload, function (data, response) {
                                      console.log(response.statusCode + ': ' + response.statusMessage);
                                      console.log(JSON.stringify(data, null, 2));

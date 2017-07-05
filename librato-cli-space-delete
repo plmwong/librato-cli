@@ -13,7 +13,7 @@ if (!args.length) {
 }
 
 var deleteSpace = function(spaceId) {
-  var endPoint = config.baseUrl + 'spaces/' + spaceId;
+  var endPoint = config.baseUrl + 'v1/spaces/' + spaceId;
   client.delete(endPoint, function printResponse(data, response) {
                         console.log(JSON.stringify(data, null, 2));
                       });

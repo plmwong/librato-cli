@@ -27,7 +27,7 @@ var importCharts = function(spaceId, charts) {
         headers: { 'Content-Type': 'application/json' }
     };
 
-    var endPoint = config.baseUrl + 'spaces/' + spaceId + '/charts';
+    var endPoint = config.baseUrl + 'v1/spaces/' + spaceId + '/charts';
 
     client.post(endPoint, newChartPayload, printResponse);
   }
@@ -45,7 +45,7 @@ var importSpace = function(spaceDefinition) {
     headers: { 'Content-Type': 'application/json' }
   };
 
-  var endPoint = config.baseUrl + 'spaces';
+  var endPoint = config.baseUrl + 'v1/spaces';
   client.post(endPoint, newSpacePayload,
              function (data, response) {
                 printResponse(data, response);

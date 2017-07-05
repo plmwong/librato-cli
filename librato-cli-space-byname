@@ -12,7 +12,7 @@ if (!args.length) {
   return;
 }
 
-var endPoint = config.baseUrl + 'spaces';
+var endPoint = config.baseUrl + 'v1/spaces';
 client.get(endPoint, function printResponse(data, response) {
                        for (s in data.spaces) {
                          if (data.spaces[s].name == args[0]) {

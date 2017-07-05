@@ -38,7 +38,7 @@ var getNextPageOfMetrics = function(filter, endPoint, nextOffset, length, metric
 };
 
 var listMetrics = function(filter) {
-  var endPoint = config.baseUrl + 'metrics?name=' + filter;
+  var endPoint = config.baseUrl + 'v1/metrics?name=' + filter;
   var offset = 0;
   var length = 100;
   var metrics = [];

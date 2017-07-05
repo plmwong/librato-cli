@@ -13,7 +13,7 @@ if (!args.length) {
 }
 
 var listCharts = function(spaceId) {
-  var endPoint = config.baseUrl + 'spaces/' + spaceId + '/charts';
+  var endPoint = config.baseUrl + 'v1/spaces/' + spaceId + '/charts';
   client.get(endPoint, function (data, response) {
                          console.log(JSON.stringify(data, null, 2));
                        });

@@ -2,7 +2,7 @@
 var config = require('./modules/librato-cli-config');
 var client = require('./modules/librato-cli-client');
 
-var endPoint = config.baseUrl + 'v1/annotations';
+var endPoint = config.baseUrl + 'v1/alerts';
 client.get(endPoint,
            function (data, response) {
               console.log(JSON.stringify(data, null, 2));

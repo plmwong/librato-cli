@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 var program = require('commander');
 program
-  .version('0.2.0')
+  .version('0.3.0')
   .command('settoken [token]', 'set the librato token for accessing the librato API')
   .command('setapikey [api key]', 'set the librato API key for accessing the librato API')
   .parse(process.argv);

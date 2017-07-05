@@ -18,7 +18,7 @@ var importChart = function(spaceId, chartDefinition) {
     headers: { 'Content-Type': 'application/json' }
   };
 
-  var endPoint = config.baseUrl + 'spaces/' + spaceId + '/charts';
+  var endPoint = config.baseUrl + 'v1/spaces/' + spaceId + '/charts';
   client.post(endPoint, payload, function (data, response) {
                                    console.log(response.statusCode + ': ' + response.statusMessage);
                                    console.log(JSON.stringify(data, null, 2));

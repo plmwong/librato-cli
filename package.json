@@ -1,7 +1,7 @@
 {
   "name": "librato-cli",
   "description": "Command-line interface for interacting with the Librato API",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "author": "Phillip Wong <wongphil@gmail.com>",
   "keywords": [
     "librato",
