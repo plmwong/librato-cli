@@ -1,11 +1,12 @@
 #!/usr/bin/env node
 var program = require('commander');
 program
-  .version('0.2.0')
+  .version('0.3.0')
   .command('list', 'list all librato spaces')
-  .command('get [space id]', 'get definition for a librato space')
-  .command('byname [terms]', 'get definition for a librato space by its name')
-  .command('delete [space id]', 'remove a librato space')
-  .command('export [space id]', 'export the definition for a space, including the definitions for its charts, as a JSON file')
-  .command('import [space definition]', 'import the definition for a space, as a newly created space')
+  .command('get <space_id>', 'get definition for a librato space')
+  .command('byname <search_name>', 'get definition for a librato space by its name')
+  .command('delete <space_id>', 'remove a librato space')
+  .command('export <space_id>', 'export the definition for a space, including the definitions for its charts, as a JSON file')
+  .command('import <space_definition>', 'import the definition for a space, as a newly created space')
+  .command('migrate <legacy_space_definition>', 'migrates a legacy metric space to an equivalent tagged metric space')
   .parse(process.argv);

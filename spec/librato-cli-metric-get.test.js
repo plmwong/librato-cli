@@ -5,7 +5,9 @@ describe('when obtaining measurements for metric, but no metric name has been pr
 
   beforeEach(function() {
     var mockProgram = {
-        parse: function() { },
+        parse: function() { return mockProgram; },
+        usage: function() { return mockProgram; },
+        outputHelp: function() { return mockProgram; },
         args: [ ]
       };
 
@@ -16,7 +18,7 @@ describe('when obtaining measurements for metric, but no metric name has been pr
   });
 
   it('should stop and tell the user to provide a metric name', function() {
-    expect(output).toEqual('You must specify a metric name');
+    expect(output).toEqual('You must specify the name of the metric you want to get values for');
   });
 });
 
@@ -25,7 +27,9 @@ describe('when obtaining measurements for metric, but no duration has been provi
 
   beforeEach(function() {
     var mockProgram = {
-        parse: function() { },
+        parse: function() { return mockProgram; },
+        usage: function() { return mockProgram; },
+        outputHelp: function() { return mockProgram; },
         args: [ 'metric-name' ]
       };
 
@@ -36,7 +40,7 @@ describe('when obtaining measurements for metric, but no duration has been provi
   });
 
   it('should stop and tell the user to provide a duration', function() {
-    expect(output).toEqual('You should supply the number of seconds in the past to query for');
+    expect(output).toEqual('You should supply the number of seconds in the past to fetch values for');
   });
 });
 
@@ -67,7 +71,9 @@ describe('when obtaining measurements for metric', function() {
       };
     };
     var mockProgram = {
-        parse: function() { },
+        parse: function() { return mockProgram; },
+        usage: function() { return mockProgram; },
+        outputHelp: function() { return mockProgram; },
         args: [ 'metric-name', 60 ]
       };
 
@@ -79,11 +85,11 @@ describe('when obtaining measurements for metric', function() {
   });
 
   it('should make a first call to the metric using the specified start and end times', function() {
-    expect(calledEndPoints[0]).toEqual('metrics/metric-name?start_time=1&end_time=1&resolution=60');
+    expect(calledEndPoints[0]).toEqual('v1/metrics/metric-name?start_time=1&end_time=1&resolution=60');
   });
 
   it('should make an additional call to the metric for any query start time returned from the api', function() {
-    expect(calledEndPoints[0]).toEqual('metrics/metric-name?start_time=1&end_time=1&resolution=60');
+    expect(calledEndPoints[0]).toEqual('v1/metrics/metric-name?start_time=1&end_time=1&resolution=60');
   });
 
   it('should print out the response from the /spaces resource', function() {

@@ -1,0 +1,46 @@
+#!/usr/bin/env node
+var config = require('./modules/librato-cli-config');
+var client = require('./modules/librato-cli-client');
+var flow = require('./modules/librato-cli-flow');
+var program = require('commander');
+var fs = require('fs');
+
+program
+  .usage('[options] [alerts_definition]')
+  .option('-f, --file [alert_file]', 'Import all alert definitions contained in the given file')
+  .parse(process.argv);
+var args = program.args;
+
+if (!program.file && args.length < 1) {
+  program.outputHelp();
+  flow.error('You must specify an alerts definition to import, either as a string argument or by loading from a file using --file/-f');
+  return;
+}
+
+var importAlert = function(alertDefinitions) {
+  alertDefinitions.forEach(function(alert) {
+    var payload = {
+      data: alert,
+      headers: { 'Content-Type': 'application/json' }
+    };
+
+    var endPoint = config.baseUrl + 'v1/alerts';
+    client.post(endPoint, payload, function (data, response) {
+                                     console.log(response.statusCode + ': ' + response.statusMessage);
+                                     console.log(JSON.stringify(data, null, 2));
+                                   });
+  });
+};
+
+if (program.file) {
+  fs.readFile(program.file, 'utf8', function (err, data) {
+    if (err) {
+      return flow.error(err);
+    }
+
+    importAlert(JSON.parse(data));
+  });
+} else {
+  importAlert(JSON.parse(args[args.length - 1]));
+}
+

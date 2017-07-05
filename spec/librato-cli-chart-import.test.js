@@ -5,7 +5,9 @@ describe('when importing a chart, but the space id has not been specified', func
 
   beforeEach(function() {
     var mockProgram = {
-        parse: function() { },
+        parse: function() { return mockProgram; },
+        usage: function() { return mockProgram; },
+        outputHelp: function() { return mockProgram; },
         args: [ ]
       };
 
@@ -16,7 +18,7 @@ describe('when importing a chart, but the space id has not been specified', func
   });
 
   it('should stop and tell the user to provide a space id', function() {
-    expect(output).toEqual('You must specify a space id to import to chart in to');
+    expect(output).toEqual('You must specify the id of the space you want to import in to, as well as the JSON definition of the chart');
   });
 });
 
@@ -34,7 +36,9 @@ describe('when importing a chart', function() {
         }
       };
     var mockProgram = {
-        parse: function() { },
+        parse: function() { return mockProgram; },
+        usage: function() { return mockProgram; },
+        outputHelp: function() { return mockProgram; },
         args: [ '1234', JSON.stringify(testPayload) ]
       };
 
@@ -46,7 +50,7 @@ describe('when importing a chart', function() {
   });
 
   it('should call the specified chart resource on librato api', function() {
-    expect(calledEndPoint).toEqual('spaces/1234/charts');
+    expect(calledEndPoint).toEqual('v1/spaces/1234/charts');
   });
 
   it('should use the chart definition specified as payload to librato api', function() {

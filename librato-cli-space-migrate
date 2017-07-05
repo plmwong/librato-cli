@@ -1,0 +1,65 @@
+#!/usr/bin/env node
+var config = require('./modules/librato-cli-config');
+var client = require('./modules/librato-cli-client');
+var flow = require('./modules/librato-cli-flow');
+var program = require('commander');
+var fs = require('fs');
+
+program
+  .usage('[options] [space_definition]')
+  .option('-f, --file [space_file]', 'Migrate the space definition contained in the given file')
+  .option('-s, --suffix [space_suffix]', 'The suffix which should be applied to the migrated space name')
+  .parse(process.argv);
+
+var args = program.args;
+
+if (!program.file && args.length < 1) {
+  program.outputHelp();
+  flow.error('You must specify a space definition to migrate a space, either as a string argument or by loading from a file using --file/-f');
+  return;
+}
+
+var migrateSpace = function(spaceDefinition) {
+  spaceDefinition.tags = true;
+
+  if (program.suffix) {
+    spaceDefinition.name = spaceDefinition.name + program.suffix;
+  }
+
+  spaceDefinition.charts.forEach(function(chart) {
+    chart.streams.forEach(function(stream) {
+      if (metric.type && metric.type === 'composite') {
+        var seriesRegex = /((?:s|series){1}\(".+?",(?: )*)(".+?")((?:,(?: )*\{.+?\})?\))/gi;
+        if (metric.composite.match(seriesRegex)) {
+          metric.composite = metric.composite.replace(seriesRegex, function(full, prefix, source, suffix) {
+            if (source === '"*"') {
+              return prefix + '{ }' + suffix;
+            }
+
+            if (source === '"%"') {
+              return prefix + source + suffix;
+            }
+
+            sourcePattern = source.replace(/^"(.*)"$/, '$1');
+
+            return prefix + '{ "source": "' + sourcePattern + '" }' + suffix;
+          });
+        }
+      }
+    });
+  });
+
+  console.log(JSON.stringify(spaceDefinition, null, 2));
+};
+
+if (program.file) {
+  fs.readFile(program.file, 'utf8', function (err, data) {
+    if (err) {
+      return flow.error(err);
+    }
+
+    migrateSpace(JSON.parse(data));
+  });
+} else {
+  migrateSpace(JSON.parse(args[0]));
+}

@@ -4,11 +4,13 @@ var client = require('./modules/librato-cli-client');
 var flow = require('./modules/librato-cli-flow');
 var program = require('commander');
 
-program.parse(process.argv);
+program
+  .usage('<space_id>')
+  .parse(process.argv);
 var args = program.args;
 
 if (args.length < 1) {
-  flow.error('You must specify the space id of the space you wish to export');
+  flow.error('You must specify the id of the space you want to export');
   return;
 }
 
@@ -43,7 +45,7 @@ var removeIds = function(data) {
 };
 
 var exportCharts = function(spaceId, callback) {
-  var endPoint = config.baseUrl + 'spaces/' + spaceId + '/charts';
+  var endPoint = config.baseUrl + 'v1/spaces/' + spaceId + '/charts';
   client.get(endPoint, function (data, response) {
                          callback(data);
                        });
@@ -51,7 +53,7 @@ var exportCharts = function(spaceId, callback) {
 
 var exportSpace = function(spaceId) {
   var spaceDefinition = { };
-  var endPoint = config.baseUrl + 'spaces/' + spaceId;
+  var endPoint = config.baseUrl + 'v1/spaces/' + spaceId;
 
   client.get(endPoint, function (data, response) {
                          spaceDefinition = removeIds([ data ])[0];

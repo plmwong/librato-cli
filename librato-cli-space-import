@@ -3,12 +3,17 @@ var config = require('./modules/librato-cli-config');
 var client = require('./modules/librato-cli-client');
 var flow = require('./modules/librato-cli-flow');
 var program = require('commander');
+var fs = require('fs');
 
-program.parse(process.argv);
+program
+  .usage('[options] [space_definition]')
+  .option('-f, --file [space_file]', 'Import the space definition contained in the given file')
+  .parse(process.argv);
 var args = program.args;
 
-if (args.length < 1) {
-  flow.error('You must specify a space definition to import a space');
+if (!program.file && args.length < 1) {
+  program.outputHelp();
+  flow.error('You must specify a space definition to import, either as a string argument or by loading from a file using --file/-f');
   return;
 }
 
@@ -24,19 +29,25 @@ var importCharts = function(spaceId, charts) {
         headers: { 'Content-Type': 'application/json' }
     };
 
-    var endPoint = config.baseUrl + 'spaces/' + spaceId + '/charts';
+    var endPoint = config.baseUrl + 'v1/spaces/' + spaceId + '/charts';
 
     client.post(endPoint, newChartPayload, printResponse);
   }
 };
 
 var importSpace = function(spaceDefinition) {
+  var spaceConfig = { name: spaceDefinition.name };
+
+  if (spaceDefinition.hasOwnProperty('tags')) {
+    spaceConfig['tags'] = spaceDefinition.tags;
+  }
+
   var newSpacePayload = {
-    data: JSON.stringify({ name: spaceDefinition.name }),
+    data: JSON.stringify(spaceConfig),
     headers: { 'Content-Type': 'application/json' }
   };
 
-  var endPoint = config.baseUrl + 'spaces';
+  var endPoint = config.baseUrl + 'v1/spaces';
   client.post(endPoint, newSpacePayload,
              function (data, response) {
                 printResponse(data, response);
@@ -46,4 +57,15 @@ var importSpace = function(spaceDefinition) {
              });
 };
 
-importSpace(JSON.parse(args[0]));
+
+if (program.file) {
+  fs.readFile(program.file, 'utf8', function (err, data) {
+    if (err) {
+      return flow.error(err);
+    }
+
+    importSpace(JSON.parse(data));
+  });
+} else {
+  importSpace(JSON.parse(args[0]));
+}

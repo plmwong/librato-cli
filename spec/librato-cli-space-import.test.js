@@ -5,7 +5,10 @@ describe('when importing a space, but the space definition has not been specifie
 
   beforeEach(function() {
     var mockProgram = {
-        parse: function() { },
+        parse: function() { return mockProgram; },
+        usage: function() { return mockProgram; },
+        option: function() { return mockProgram; },
+        outputHelp: function() { return mockProgram; },
         args: [ ]
       };
 
@@ -16,7 +19,7 @@ describe('when importing a space, but the space definition has not been specifie
   });
 
   it('should stop and tell the user to provide a space definition', function() {
-    expect(output).toEqual('You must specify a space definition to import a space');
+    expect(output).toEqual('You must specify a space definition to import, either as a string argument or by loading from a file using --file/-f');
   });
 });
 
@@ -36,7 +39,10 @@ describe('when importing a space', function() {
         }
       };
     var mockProgram = {
-        parse: function() { },
+        parse: function() { return mockProgram; },
+        usage: function() { return mockProgram; },
+        option: function() { return mockProgram; },
+        outputHelp: function() { return mockProgram; },
         args: [ JSON.stringify(testSpaceDefinition) ]
       };
 
@@ -48,12 +54,12 @@ describe('when importing a space', function() {
   });
 
   it('should create a new space', function() {
-    expect(calledEndPoints[0]).toEqual('spaces');
+    expect(calledEndPoints[0]).toEqual('v1/spaces');
     expect(calledPayloads[0].data).toEqual('{"name":"foo"}');
   });
 
   it('should create a chart within the new space for each chart defined', function() {
-    expect(calledEndPoints[1]).toEqual('spaces/undefined/charts');
+    expect(calledEndPoints[1]).toEqual('v1/spaces/undefined/charts');
     expect(calledPayloads[1].data).toEqual(testSpaceDefinition.charts[0]);
   });
 

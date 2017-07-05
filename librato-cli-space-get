@@ -4,16 +4,18 @@ var client = require('./modules/librato-cli-client');
 var flow = require('./modules/librato-cli-flow');
 var program = require('commander');
 
-program.parse(process.argv);
+program
+  .usage('<space_id>')
+  .parse(process.argv);
 var args = program.args;
 
 if (!args.length) {
-  flow.error('You must specify a space id');
+  flow.error('You must specify the id of the space');
   return;
 }
 
 var getSpace = function(spaceId) {
-  var endPoint = config.baseUrl + 'spaces/' + spaceId;
+  var endPoint = config.baseUrl + 'v1/spaces/' + spaceId;
   client.get(endPoint, function printResponse(data, response) {
                         console.log(JSON.stringify(data, null, 2));
                       });

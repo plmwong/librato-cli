@@ -19,7 +19,7 @@ describe('when obtaining a list of sources', function() {
   });
 
   it('should call /sources resource on librato api', function() {
-    expect(calledEndPoint).toEqual('sources');
+    expect(calledEndPoint).toEqual('v1/sources');
   });
 
   it('should print out the response from the /sources resource', function() {

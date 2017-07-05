@@ -23,7 +23,7 @@ _librato-cli_ requires a token and API key to access the API. You can generate t
 {
   "libratoToken" : "<your_token>",
   "libratoApiKey" : "<your_api_key>",
-  "baseUrl" : "https://metrics-api.librato.com/v1/"
+  "baseUrl" : "https://metrics-api.librato.com/"
 }
 ```
 
@@ -46,14 +46,14 @@ librato-cli space list
 #get definition for space 65408
 librato-cli space get 65408
 
-#list all metrics (limit 100)
+#list all metrics
 librato-cli metric list
 
 #list metrics that match the 'foo.bar' filter pattern
 librato-cli metric list foo.bar
 
 #get measures from 4 hours ago for a metric
-librato-cli-metric-get foo.bar 14400
+librato-cli metric get foo.bar 14400
 
 #update metric named 'foo.bar', setting its summarize function to use summation
 librato-cli attr foo.bar summarize_function=sum
@@ -69,6 +69,10 @@ librato-cli space export 65408 > test.json
 
 #import that space definition as a brand new space
 librato-cli space import "$(cat test.json)"
+librato-cli space import --file test.json
+
+#migrate a space definition from using legacy metrics to using tagged metrics
+librato-cli space migrate --file legacy.json > tagged.json
 ```
 
 ## Legal ##

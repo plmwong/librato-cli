@@ -1,0 +1,89 @@
+#!/usr/bin/env node
+var config = require('./modules/librato-cli-config');
+var client = require('./modules/librato-cli-client');
+var flow = require('./modules/librato-cli-flow');
+var program = require('commander');
+var fs = require('fs');
+
+program
+  .usage('[options] [alerts_definition]')
+  .option('-f, --file <alert_file>', 'Migrate all alert definitions contained in the given file')
+  .option('-s, --suffix <alert_suffix>', 'The suffix which should be applied to the alert name')
+  .option('-m, --metrics <metrics_file>', 'Specify a list of known composite metrics which should be migrated if used within one of the alerts')
+  .option('-x, --metricsuffix <metric_suffix>', 'The suffix which should be applied to any migrated composite metrics')
+  .parse(process.argv);
+
+var args = program.args;
+
+if (!program.file && args.length < 2) {
+  program.outputHelp();
+  flow.error('You must at least specify an alerts definition to migrate, either as a string argument or by loading from a file using --file/-f');
+  return;
+}
+
+var migrateAlert = function(alertDefinition, metricDefinitions) {
+  alertDefinition.forEach(function(alert) {
+    if (program.suffix) {
+      alert.name = alert.name + program.suffix;
+    }
+
+    alert.md = true;
+
+    var metricNames = metricDefinitions.map(function(metric) {
+      return metric.name;
+    });
+
+    alert.conditions.forEach(function(condition) {
+      if (metricNames.indexOf(condition.metric_name) > 0) {
+        condition.metric_name = condition.metric_name + (program.metricsuffix ? program.metricsuffix : '');
+
+        if (condition.source) {
+          var source = condition.source;
+
+          if (source !== '*') {
+            var sourceTag = {
+              name: "source",
+              grouped: false,
+              values: [
+                source
+              ]
+            };
+
+            condition.tags = [ sourceTag ];
+          }
+        }
+
+        delete condition.source;
+      }
+    });
+  });
+
+  console.log(JSON.stringify(alertDefinition, null, 2));
+};
+
+var loadAlerts = function(metrics) {
+  if (program.file) {
+    fs.readFile(program.file, 'utf8', function (err, data) {
+      if (err) {
+        return flow.error(err);
+      }
+
+      migrateAlert(JSON.parse(data), metrics);
+    });
+  } else {
+    migrateAlert(JSON.parse(args[args.length - 1]), metrics);
+  }
+}
+
+if (program.metrics) {
+  fs.readFile(program.metrics, 'utf8', function (err, data) {
+    if (err) {
+      return flow.error(err);
+    }
+
+    loadAlerts(JSON.parse(data));
+  });
+} else {
+  loadAlerts([]);
+}
+

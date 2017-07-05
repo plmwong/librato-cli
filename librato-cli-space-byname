@@ -4,15 +4,18 @@ var client = require('./modules/librato-cli-client');
 var flow = require('./modules/librato-cli-flow');
 var program = require('commander');
 
-program.parse(process.argv);
+program
+  .usage('<search_name>')
+  .parse(process.argv);
 var args = program.args;
 
 if (!args.length) {
-  flow.error('You must specify a search term');
+  program.outputHelp();
+  flow.error('You must specify a search string to match the names of spaces against');
   return;
 }
 
-var endPoint = config.baseUrl + 'spaces';
+var endPoint = config.baseUrl + 'v1/spaces';
 client.get(endPoint, function printResponse(data, response) {
                        for (s in data.spaces) {
                          if (data.spaces[s].name == args[0]) {

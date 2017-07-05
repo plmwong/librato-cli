@@ -1,8 +1,13 @@
 #!/usr/bin/env node
 var config = require('./modules/librato-cli-config');
 var client = require('./modules/librato-cli-client');
+var program = require('commander');
 
-var endPoint = config.baseUrl + 'spaces';
+program
+  .parse(process.argv);
+var args = program.args;
+
+var endPoint = config.baseUrl + 'v1/spaces';
 client.get(endPoint, function printResponse(data, response) {
                        console.log(JSON.stringify(data, null, 2));
                      });

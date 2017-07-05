@@ -5,7 +5,9 @@ describe('when exporting a chart, but the space id has not been specified', func
 
   beforeEach(function() {
     var mockProgram = {
-        parse: function() { },
+        parse: function() { return mockProgram; },
+        usage: function() { return mockProgram; },
+        outputHelp: function() { return mockProgram; },
         args: [ ]
       };
 
@@ -16,7 +18,7 @@ describe('when exporting a chart, but the space id has not been specified', func
   });
 
   it('should stop and tell the user to provide a space id', function() {
-    expect(output).toEqual('You must specify the chart id and the space id of the space it is contained in to export it');
+    expect(output).toEqual('You must specify the both the id of the space and the id of the chart contained within it in order to export');
   });
 });
 
@@ -25,7 +27,9 @@ describe('when exporting a chart, but the chart id has not been specified', func
 
   beforeEach(function() {
     var mockProgram = {
-        parse: function() { },
+        parse: function() { return mockProgram; },
+        usage: function() { return mockProgram; },
+        outputHelp: function() { return mockProgram; },
         args: [ ]
       };
 
@@ -36,7 +40,7 @@ describe('when exporting a chart, but the chart id has not been specified', func
   });
 
   it('should stop and tell the user to provide a chart id', function() {
-    expect(output).toEqual('You must specify the chart id and the space id of the space it is contained in to export it');
+    expect(output).toEqual('You must specify the both the id of the space and the id of the chart contained within it in order to export');
   });
 });
 
@@ -51,8 +55,11 @@ describe('when exporting a chart', function() {
           handler(testResponse, { });
         }
       };
+
     var mockProgram = {
-        parse: function() { },
+        parse: function() { return mockProgram; },
+        usage: function() { return mockProgram; },
+        outputHelp: function() { return mockProgram; },
         args: [ '1234', '5678' ]
       };
 
@@ -64,7 +71,7 @@ describe('when exporting a chart', function() {
   });
 
   it('should call the specified chart resource on librato api', function() {
-    expect(calledEndPoint).toEqual('spaces/1234/charts/5678');
+    expect(calledEndPoint).toEqual('v1/spaces/1234/charts/5678');
   });
 
   it('should print out the response with the ids removed', function() {
@@ -84,7 +91,9 @@ describe('when exporting a chart containing composite metrics', function() {
         }
       };
     var mockProgram = {
-        parse: function() { },
+        parse: function() { return mockProgram; },
+        usage: function() { return mockProgram; },
+        outputHelp: function() { return mockProgram; },
         args: [ '1234', '5678' ]
       };
 
@@ -96,7 +105,7 @@ describe('when exporting a chart containing composite metrics', function() {
   });
 
   it('should call the specified chart resource on librato api', function() {
-    expect(calledEndPoint).toEqual('spaces/1234/charts/5678');
+    expect(calledEndPoint).toEqual('v1/spaces/1234/charts/5678');
   });
 
   it('should print out the response with the metric property removed', function() {

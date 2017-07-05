@@ -5,7 +5,10 @@ describe('when exporting a space, but the space definition has not been specifie
 
   beforeEach(function() {
     var mockProgram = {
-        parse: function() { },
+        parse: function() { return mockProgram; },
+        usage: function() { return mockProgram; },
+        option: function() { return mockProgram; },
+        outputHelp: function() { return mockProgram; },
         args: [ ]
       };
 
@@ -16,7 +19,7 @@ describe('when exporting a space, but the space definition has not been specifie
   });
 
   it('should stop and tell the user to provide a space definition', function() {
-    expect(output).toEqual('You must specify the space id of the space you wish to export');
+    expect(output).toEqual('You must specify the id of the space you want to export');
   });
 });
 
@@ -31,17 +34,20 @@ describe('when exporting a space', function() {
         get: function(endPoint, handler) {
           calledEndPoint = endPoint;
 
-          if (calledEndPoint === 'spaces/1234') {
+          if (calledEndPoint === 'v1/spaces/1234') {
             handler(testSpaceResponse, { });
           }
 
-          if (calledEndPoint === 'spaces/1234/charts') {
+          if (calledEndPoint === 'v1/spaces/1234/charts') {
             handler(testChartResponse, { });
           }
         }
       };
     var mockProgram = {
-        parse: function() { },
+        parse: function() { return mockProgram; },
+        usage: function() { return mockProgram; },
+        option: function() { return mockProgram; },
+        outputHelp: function() { return mockProgram; },
         args: [ '1234' ]
       };
 
@@ -53,7 +59,7 @@ describe('when exporting a space', function() {
   });
 
   it('should call the specified chart resource on librato api', function() {
-    expect(calledEndPoint).toEqual('spaces/1234/charts');
+    expect(calledEndPoint).toEqual('v1/spaces/1234/charts');
   });
 
   it('should print out the response with all space and chart ids removed', function() {

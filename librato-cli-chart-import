@@ -4,25 +4,28 @@ var client = require('./modules/librato-cli-client');
 var flow = require('./modules/librato-cli-flow');
 var program = require('commander');
 
-program.parse(process.argv);
+program
+  .usage('<space_id> <chart_definition>')
+  .parse(process.argv);
 var args = program.args;
 
 if (args.length < 2) {
-  flow.error('You must specify a space id to import to chart in to');
+  program.outputHelp();
+  flow.error('You must specify the id of the space you want to import in to, as well as the JSON definition of the chart');
   return;
 }
 
-var importSpace = function(spaceId, chartDefinition) {
+var importChart = function(spaceId, chartDefinition) {
   var payload = {
     data: JSON.parse(chartDefinition),
     headers: { 'Content-Type': 'application/json' }
   };
 
-  var endPoint = config.baseUrl + 'spaces/' + spaceId + '/charts';
+  var endPoint = config.baseUrl + 'v1/spaces/' + spaceId + '/charts';
   client.post(endPoint, payload, function (data, response) {
                                    console.log(response.statusCode + ': ' + response.statusMessage);
                                    console.log(JSON.stringify(data, null, 2));
                                  });
 };
 
-importSpace(args[0], args[1]);
+importChart(args[0], args[1]);

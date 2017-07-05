@@ -5,7 +5,10 @@ describe('when updating a metric, but no metric name has been given', function()
 
   beforeEach(function() {
     var mockProgram = {
-        parse: function() { },
+        parse: function() { return mockProgram; },
+        usage: function() { return mockProgram; },
+        option: function() { return mockProgram; },
+        outputHelp: function() { return mockProgram; },
         args: [ ]
       };
 
@@ -25,7 +28,10 @@ describe('when updating a metric, but no property changes have been specified', 
 
   beforeEach(function() {
     var mockProgram = {
-        parse: function() { },
+        parse: function() { return mockProgram; },
+        usage: function() { return mockProgram; },
+        option: function() { return mockProgram; },
+        outputHelp: function() { return mockProgram; },
         args: [ 'metric-name' ]
       };
 
@@ -36,7 +42,7 @@ describe('when updating a metric, but no property changes have been specified', 
   });
 
   it('should stop and tell the user to provide some property changes', function() {
-    expect(output).toEqual('No properties were specified, nothing was done');
+    expect(output).toEqual('No properties were specified to be updated, nothing has been done');
   });
 });
 
@@ -56,7 +62,10 @@ describe('when changing properties on a metric', function() {
           }
         };
     var mockProgram = {
-        parse: function() { },
+        parse: function() { return mockProgram; },
+        usage: function() { return mockProgram; },
+        option: function() { return mockProgram; },
+        outputHelp: function() { return mockProgram; },
         args: [ 'metric-name', 'property1=value1', 'property2=value2' ]
       };
 
@@ -68,7 +77,7 @@ describe('when changing properties on a metric', function() {
   });
 
   it('should update the specified metric resource on librato api', function() {
-    expect(calledEndPoint).toEqual('metrics/metric-name');
+    expect(calledEndPoint).toEqual('v1/metrics/metric-name');
   });
 
   it('should send the list of property changes as the request body to the librato api', function() {
