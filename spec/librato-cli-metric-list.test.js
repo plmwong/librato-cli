@@ -12,8 +12,10 @@ describe('when obtaining a list of metrics without a filter', function() {
           }
         };
     var mockProgram = {
-        parse: function() { },
-        option: function() { return { parse: function() { }, option: function() { return { parse: function() { } } } } },
+        parse: function() { return mockProgram; },
+        usage: function() { return mockProgram; },
+        option: function() { return mockProgram; },
+        outputHelp: function() { return mockProgram; },
         args: [ ]
       };
 
@@ -45,8 +47,10 @@ describe('when obtaining a list of metrics with a specified filter', function() 
           }
         };
     var mockProgram = {
-        parse: function() { },
-        option: function() { return { parse: function() { }, option: function() { return { parse: function() { } } } } },
+        parse: function() { return mockProgram; },
+        usage: function() { return mockProgram; },
+        option: function() { return mockProgram; },
+        outputHelp: function() { return mockProgram; },
         args: [ 'filter' ]
       };
 

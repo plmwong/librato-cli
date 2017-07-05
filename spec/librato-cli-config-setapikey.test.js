@@ -5,7 +5,9 @@ describe('when setting the configured api key, but none has been provided', func
 
   beforeEach(function() {
     var mockProgram = {
-        parse: function() { },
+        parse: function() { return mockProgram; },
+        usage: function() { return mockProgram; },
+        outputHelp: function() { return mockProgram; },
         args: [ ]
       };
 
@@ -16,6 +18,6 @@ describe('when setting the configured api key, but none has been provided', func
   });
 
   it('should stop and tell the user to provide an api key', function() {
-    expect(output).toEqual('No API key specified, nothing changed');
+    expect(output).toEqual('No API key specified, no configuration changes were applied');
   });
 });

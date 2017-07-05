@@ -4,7 +4,7 @@ describe('when obtaining a list of annotations', function() {
   var output, calledEndPoint;
 
   beforeEach(function() {
-    var testResponse = { foo: "bar" };
+    var testResponse = { annotations: [ { type: 'foo' } ] };
     var mockClient = {
           get: function(endPoint, handler) {
             calledEndPoint = endPoint;
@@ -23,6 +23,6 @@ describe('when obtaining a list of annotations', function() {
   });
 
   it('should print out the response from the /annotations resource', function() {
-    expect(output).toEqual('{\n  "foo": "bar"\n}');
+    expect(output).toEqual('[\n  {\n    "type": "foo"\n  }\n]');
   });
 });

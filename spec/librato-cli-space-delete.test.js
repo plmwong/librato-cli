@@ -5,7 +5,10 @@ describe('when deleting a particular space, but the space id has not been specif
 
   beforeEach(function() {
     var mockProgram = {
-        parse: function() { },
+        parse: function() { return mockProgram; },
+        usage: function() { return mockProgram; },
+        option: function() { return mockProgram; },
+        outputHelp: function() { return mockProgram; },
         args: [ ]
       };
 
@@ -16,7 +19,7 @@ describe('when deleting a particular space, but the space id has not been specif
   });
 
   it('should stop and tell the user to provide a space id', function() {
-    expect(output).toEqual('You must specify a space id');
+    expect(output).toEqual('You must specify the id of the space you want to delete');
   });
 });
 
@@ -31,7 +34,10 @@ describe('when deleting a particular space', function() {
           }
         };
     var mockProgram = {
-        parse: function() { },
+        parse: function() { return mockProgram; },
+        usage: function() { return mockProgram; },
+        option: function() { return mockProgram; },
+        outputHelp: function() { return mockProgram; },
         args: [ '1234' ]
       };
 
