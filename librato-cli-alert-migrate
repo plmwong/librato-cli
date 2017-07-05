@@ -6,16 +6,18 @@ var program = require('commander');
 var fs = require('fs');
 
 program
-  .option('-f, --file [alert_file]', 'Migrate an alert file')
-  .option('-m, --metrics [metrics_file]', 'A list of the pre-migrated composite metrics')
-  .option('-x, --metricsuffix [metric_suffix]', 'The suffix (if any) which was applied when migrating the metrics')
-  .option('-s, --suffix [alert_suffix]', 'Apply a suffix to the migrated alert name')
+  .usage('[options] [alerts_definition]')
+  .option('-f, --file <alert_file>', 'Migrate all alert definitions contained in the given file')
+  .option('-s, --suffix <alert_suffix>', 'The suffix which should be applied to the alert name')
+  .option('-m, --metrics <metrics_file>', 'Specify a list of known composite metrics which should be migrated if used within one of the alerts')
+  .option('-x, --metricsuffix <metric_suffix>', 'The suffix which should be applied to any migrated composite metrics')
   .parse(process.argv);
 
 var args = program.args;
 
 if (!program.file && args.length < 2) {
-  flow.error('You must specify an alert definition and a composite metric definition to migrate an alert');
+  program.outputHelp();
+  flow.error('You must at least specify an alerts definition to migrate, either as a string argument or by loading from a file using --file/-f');
   return;
 }
 
@@ -69,7 +71,7 @@ var loadAlerts = function(metrics) {
       migrateAlert(JSON.parse(data), metrics);
     });
   } else {
-    migrateAlert(JSON.parse(args[0]), metrics);
+    migrateAlert(JSON.parse(args[args.length - 1]), metrics);
   }
 }
 

@@ -4,16 +4,20 @@ var client = require('./modules/librato-cli-client');
 var flow = require('./modules/librato-cli-flow');
 var program = require('commander');
 
-program.parse(process.argv);
+program
+  .usage('<metric_name_pattern> <attributes>')
+  .parse(process.argv);
 var args = program.args;
 
 if (args.length < 1) {
+  program.outputHelp();
   flow.error('You must specify the metric name or pattern of the metric you wish to update');
   return;
 }
 
 if (args.length < 2) {
-  flow.error('No properties were specified, nothing was done');
+  program.outputHelp();
+  flow.error('No properties were specified to be updated, nothing has been done');
   return;
 }
 

@@ -6,14 +6,16 @@ var program = require('commander');
 var fs = require('fs');
 
 program
-  .option('-f, --file [space_file]', 'Migrate a space file')
-  .option('-s, --suffix [space_suffix]', 'Apply a suffix to the migrated space name')
+  .usage('[options] [space_definition]')
+  .option('-f, --file [space_file]', 'Migrate the space definition contained in the given file')
+  .option('-s, --suffix [space_suffix]', 'The suffix which should be applied to the migrated space name')
   .parse(process.argv);
 
 var args = program.args;
 
 if (!program.file && args.length < 1) {
-  flow.error('You must specify a space definition to migrate a space');
+  program.outputHelp();
+  flow.error('You must specify a space definition to migrate a space, either as a string argument or by loading from a file using --file/-f');
   return;
 }
 

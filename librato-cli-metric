@@ -3,9 +3,9 @@ var program = require('commander');
 program
   .version('0.3.0')
   .command('list [filter]', 'list all librato metrics matching the optional wildcard pattern (leave empty for all)')
-  .command('get [metric_name] [duration]', 'get measurements for a metric which have been reported within a duration')
-  .command('update [metric_name] [key=value]', 'change the properties for one or more metrics matching a wildcard pattern')
-  .command('update-attr [metric_name] [key=value]', 'change the attributes for one or more metrics matching a wildcard pattern')
-  .command('import [metric_definition]', 'import the definition for a composite metric, as a newly created metric')
-  .command('migrate [legacy_metric_definition]', 'migrates a legacy metric to an equivalent tagged metric')
+  .command('get <metric_name> [duration]', 'get measurements for a metric which have been reported within a duration')
+  .command('update <metric_name_pattern> <key=value>', 'change the properties for one or more metrics matching a wildcard pattern')
+  .command('update-attr <metric_name_pattern> <key=value>', 'change the attributes for one or more metrics matching a wildcard pattern')
+  .command('import <metric_definition>', 'import the definition for a composite metric, as a newly created metric')
+  .command('migrate <legacy_metric_definition>', 'migrates a legacy metric to an equivalent tagged metric')
   .parse(process.argv);

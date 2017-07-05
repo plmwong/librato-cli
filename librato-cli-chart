@@ -2,7 +2,7 @@
 var program = require('commander');
 program
   .version('0.3.0')
-  .command('list [space_id]', 'list all charts that are contained in the specified space')
-  .command('export [space_id] [chart_id]', 'export the specified chart\'s definition in JSON')
-  .command('import [space_id] [chart_definition]', 'imports a JSON chart definition into the specified space')
+  .command('list <space_id>', 'list all charts that are contained in the specified space')
+  .command('export <space_id> <chart_id>', 'export the specified chart\'s definition in JSON')
+  .command('import <space_id> <chart_definition>', 'imports a JSON chart definition into the specified space')
   .parse(process.argv);

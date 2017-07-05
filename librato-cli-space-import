@@ -6,12 +6,14 @@ var program = require('commander');
 var fs = require('fs');
 
 program
-  .option('-f, --file [space_file]', 'Import a space file')
+  .usage('[options] [space_definition]')
+  .option('-f, --file [space_file]', 'Import the space definition contained in the given file')
   .parse(process.argv);
 var args = program.args;
 
 if (!program.file && args.length < 1) {
-  flow.error('You must specify a space definition to import a space');
+  program.outputHelp();
+  flow.error('You must specify a space definition to import, either as a string argument or by loading from a file using --file/-f');
   return;
 }
 

@@ -4,11 +4,14 @@ var client = require('./modules/librato-cli-client');
 var flow = require('./modules/librato-cli-flow');
 var program = require('commander');
 
-program.parse(process.argv);
+program
+  .usage('<space_id> <chart_id>')
+  .parse(process.argv);
 var args = program.args;
 
 if (args.length < 2) {
-  flow.error('You must specify the chart id and the space id of the space it is contained in to export it');
+  program.outputHelp();
+  flow.error('You must specify the both the id of the space and the id of the chart contained within it in order to export');
   return;
 }
 

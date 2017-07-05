@@ -6,14 +6,16 @@ var program = require('commander');
 var fs = require('fs');
 
 program
-  .option('-f, --file [metric_file]', 'Migrate a metric file')
-  .option('-s, --suffix [metric_suffix]', 'Apply a suffix to the migrated metric name')
+  .usage('[options] [metrics_definition]')
+  .option('-f, --file [metric_file]', 'Migrate all metric definitions contained in the given file')
+  .option('-s, --suffix [metric_suffix]', 'The suffix which should be applied to the migrated metric name')
   .parse(process.argv);
 
 var args = program.args;
 
 if (!program.file && args.length < 1) {
-  flow.error('You must specify a metric definition to migrate a metric');
+  program.outputHelp();
+  flow.error('You must specify a metric definition to migrate, either as a string argument or by loading from a file using --file/-f');
   return;
 }
 

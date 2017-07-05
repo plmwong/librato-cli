@@ -4,11 +4,14 @@ var flow = require('./modules/librato-cli-flow');
 
 var program = require('commander');
 
-program.parse(process.argv);
+program
+  .usage('<token>')
+  .parse(process.argv);
 var args = program.args;
 
 if (args.length < 1) {
-  flow.error('No token specified, nothing changed');
+  program.outputHelp();
+  flow.error('No token specified, no configuration changes were applied');
   return;
 }
 

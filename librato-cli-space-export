@@ -4,11 +4,13 @@ var client = require('./modules/librato-cli-client');
 var flow = require('./modules/librato-cli-flow');
 var program = require('commander');
 
-program.parse(process.argv);
+program
+  .usage('<space_id>')
+  .parse(process.argv);
 var args = program.args;
 
 if (args.length < 1) {
-  flow.error('You must specify the space id of the space you wish to export');
+  flow.error('You must specify the id of the space you want to export');
   return;
 }
 

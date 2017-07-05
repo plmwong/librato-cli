@@ -1,9 +1,37 @@
 #!/usr/bin/env node
 var config = require('./modules/librato-cli-config');
 var client = require('./modules/librato-cli-client');
+var flow = require('./modules/librato-cli-flow');
+var program = require('commander');
+
+program
+  .option('-t --type [annotation_type]', 'specifies the type of annotations to list (either \'alert\' or \'annotation\')')
+  .parse(process.argv);
+var args = program.args;
+
+if (program.type && program.type !== 'alert' && program.type !== 'annotation') {
+  program.outputHelp();
+  flow.error('--type/-t can only be set to either \'alert\' or \'annotation\'');
+  return;
+}
 
 var endPoint = config.baseUrl + 'v1/annotations';
-client.get(endPoint,
-           function (data, response) {
-              console.log(JSON.stringify(data, null, 2));
+client.get(endPoint, function (data, response) {
+           var annotations = data.annotations;
+
+           var filteredAnnotations = annotations.filter(function(annotation) {
+             if (!program.type) {
+               return true;
+             }
+
+             if (program.type === 'annotation') {
+               return !annotation.annotation_type;
+             }
+
+             if (program.type === 'alert') {
+               return annotation.annotation_type && annotation.annotation_type === 'alert';
+             }
            });
+
+           console.log(JSON.stringify(filteredAnnotations, null, 2));
+        });
