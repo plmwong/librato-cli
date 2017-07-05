@@ -50,12 +50,12 @@ describe('when importing a space', function() {
   });
 
   it('should create a new space', function() {
-    expect(calledEndPoints[0]).toEqual('spaces');
+    expect(calledEndPoints[0]).toEqual('v1/spaces');
     expect(calledPayloads[0].data).toEqual('{"name":"foo"}');
   });
 
   it('should create a chart within the new space for each chart defined', function() {
-    expect(calledEndPoints[1]).toEqual('spaces/undefined/charts');
+    expect(calledEndPoints[1]).toEqual('v1/spaces/undefined/charts');
     expect(calledPayloads[1].data).toEqual(testSpaceDefinition.charts[0]);
   });
 

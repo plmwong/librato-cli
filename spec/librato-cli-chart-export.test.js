@@ -64,7 +64,7 @@ describe('when exporting a chart', function() {
   });
 
   it('should call the specified chart resource on librato api', function() {
-    expect(calledEndPoint).toEqual('spaces/1234/charts/5678');
+    expect(calledEndPoint).toEqual('v1/spaces/1234/charts/5678');
   });
 
   it('should print out the response with the ids removed', function() {
@@ -96,7 +96,7 @@ describe('when exporting a chart containing composite metrics', function() {
   });
 
   it('should call the specified chart resource on librato api', function() {
-    expect(calledEndPoint).toEqual('spaces/1234/charts/5678');
+    expect(calledEndPoint).toEqual('v1/spaces/1234/charts/5678');
   });
 
   it('should print out the response with the metric property removed', function() {

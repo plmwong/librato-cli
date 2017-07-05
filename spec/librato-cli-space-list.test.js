@@ -19,7 +19,7 @@ describe('when obtaining a list of spaces', function() {
   });
 
   it('should call /spaces resource on librato api', function() {
-    expect(calledEndPoint).toEqual('spaces');
+    expect(calledEndPoint).toEqual('v1/spaces');
   });
 
   it('should print out the response from the /spaces resource', function() {

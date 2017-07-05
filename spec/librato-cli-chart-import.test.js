@@ -46,7 +46,7 @@ describe('when importing a chart', function() {
   });
 
   it('should call the specified chart resource on librato api', function() {
-    expect(calledEndPoint).toEqual('spaces/1234/charts');
+    expect(calledEndPoint).toEqual('v1/spaces/1234/charts');
   });
 
   it('should use the chart definition specified as payload to librato api', function() {

@@ -44,7 +44,7 @@ describe('when obtaining a particular space', function() {
   });
 
   it('should call /spaces resource on librato api for the specified space', function() {
-    expect(calledEndPoint).toEqual('spaces/1234');
+    expect(calledEndPoint).toEqual('v1/spaces/1234');
   });
 
   it('should print out the response from the /spaces resource', function() {

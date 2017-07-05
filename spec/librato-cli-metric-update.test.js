@@ -68,7 +68,7 @@ describe('when changing properties on a metric', function() {
   });
 
   it('should update the specified metric resource on librato api', function() {
-    expect(calledEndPoint).toEqual('metrics/metric-name');
+    expect(calledEndPoint).toEqual('v1/metrics/metric-name');
   });
 
   it('should send the list of property changes as the request body to the librato api', function() {

@@ -79,11 +79,11 @@ describe('when obtaining measurements for metric', function() {
   });
 
   it('should make a first call to the metric using the specified start and end times', function() {
-    expect(calledEndPoints[0]).toEqual('metrics/metric-name?start_time=1&end_time=1&resolution=60');
+    expect(calledEndPoints[0]).toEqual('v1/metrics/metric-name?start_time=1&end_time=1&resolution=60');
   });
 
   it('should make an additional call to the metric for any query start time returned from the api', function() {
-    expect(calledEndPoints[0]).toEqual('metrics/metric-name?start_time=1&end_time=1&resolution=60');
+    expect(calledEndPoints[0]).toEqual('v1/metrics/metric-name?start_time=1&end_time=1&resolution=60');
   });
 
   it('should print out the response from the /spaces resource', function() {

@@ -19,7 +19,7 @@ describe('when obtaining a list of annotations', function() {
   });
 
   it('should call /annotations resource on librato api', function() {
-    expect(calledEndPoint).toEqual('annotations');
+    expect(calledEndPoint).toEqual('v1/annotations');
   });
 
   it('should print out the response from the /annotations resource', function() {

@@ -25,7 +25,7 @@ describe('when obtaining a list of metrics without a filter', function() {
   });
 
   it('should call /metrics resource on librato api', function() {
-    expect(calledEndPoint).toEqual('metrics?name=');
+    expect(calledEndPoint).toEqual('v1/metrics?name=');
   });
 
   it('should print out the response from the /metrics resource', function() {
@@ -58,7 +58,7 @@ describe('when obtaining a list of metrics with a specified filter', function() 
   });
 
   it('should call /metrics resource on librato api with the specified filter', function() {
-    expect(calledEndPoint).toEqual('metrics?name=filter');
+    expect(calledEndPoint).toEqual('v1/metrics?name=filter');
   });
 
   it('should print out the response from the /metrics resource', function() {
