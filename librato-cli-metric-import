@@ -3,28 +3,27 @@ var config = require('./modules/librato-cli-config');
 var client = require('./modules/librato-cli-client');
 var flow = require('./modules/librato-cli-flow');
 var program = require('commander');
+var fs = require('fs');
 
 program
   .option('-f, --file [metric_file]', 'Import a metric file of one or more metric definitions')
   .parse(process.argv);
 var args = program.args;
 
-if (args.length < 1) {
+if (!program.file && args.length < 1) {
   flow.error('You must specify a metric definition to import');
   return;
 }
 
 var importMetric = function(metricDefinitions) {
-  var metrics = JSON.parse(metricDefinitions);
-
-  metrics.forEach(function(metric) {
+  metricDefinitions.forEach(function(metric) {
     var payload = {
       data: metric,
       headers: { 'Content-Type': 'application/json' }
     };
 
     var endPoint = config.baseUrl + 'metrics/' + metric.name;
-    client.post(endPoint, payload, function (data, response) {
+    client.put(endPoint, payload, function (data, response) {
                                      console.log(response.statusCode + ': ' + response.statusMessage);
                                      console.log(JSON.stringify(data, null, 2));
                                    });
@@ -43,4 +42,3 @@ if (program.file) {
   importMetric(JSON.parse(args[0]));
 }
 
-importMetric(args[0], args[1]);

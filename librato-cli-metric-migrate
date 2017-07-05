@@ -24,19 +24,22 @@ var migrateMetric = function(metricDefinition) {
     }
 
     if (metric.type && metric.type === 'composite') {
-      metric.composite = metric.composite.replace(/((?:s|series){1}\(".+?",(?: )*)(".+?")((?:,(?: )*\{.+?\})?\))/, function(full, prefix, source, suffix) {
-        if (source === '"*"') {
-          return prefix + '{ }' + suffix;
-        }
+      var seriesRegex = /((?:s|series){1}\(".+?",(?: )*)(".+?")((?:,(?: )*\{.+?\})?\))/gi;
+      if (metric.composite.match(seriesRegex)) {
+        metric.composite = metric.composite.replace(seriesRegex, function(full, prefix, source, suffix) {
+          if (source === '"*"') {
+            return prefix + '{ }' + suffix;
+          }
 
-        if (source === '"%"') {
-          return prefix + source + suffix;
-        }
+          if (source === '"%"') {
+            return prefix + source + suffix;
+          }
 
-        sourcePattern = source.replace(/^"(.*)"$/, '$1');
+          sourcePattern = source.replace(/^"(.*)"$/, '$1');
 
-        return prefix + '{ "source": "' + sourcePattern + '" }' + suffix;
-      });
+          return prefix + '{ "source": "' + sourcePattern + '" }' + suffix;
+        });
+      }
     }
   });
 
