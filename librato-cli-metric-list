@@ -4,12 +4,13 @@ var client = require('./modules/librato-cli-client');
 var program = require('commander');
 
 program
+  .usage('[options] [filter]')
   .option('-c, --composite', 'Only return composite metrics in the results')
-  .option('-m, --max [limit]', 'Caps the maximum number of metrics to scan through')
+  .option('-m, --max [limit]', 'Caps the maximum number of metrics to scan through (default: 100)')
   .parse(process.argv);
 var args = program.args;
 
-var maxMetrics = null;
+var maxMetrics = 100;
 
 if (program.max) {
   maxMetrics = parseInt(program.max);

@@ -6,6 +6,7 @@ var moment = require('moment');
 var program = require('commander');
 
 program
+  .usage('<metric_name_pattern> <seconds_back_to_search>')
   .parse(process.argv);
 var args = program.args;
 

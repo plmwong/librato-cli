@@ -5,7 +5,7 @@ var flow = require('./modules/librato-cli-flow');
 var program = require('commander');
 
 program
-  .usage('<metric_name_pattern> <attributes>')
+  .usage('<metric_name_pattern> <key=value...>')
   .parse(process.argv);
 var args = program.args;
 

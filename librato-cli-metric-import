@@ -6,13 +6,14 @@ var program = require('commander');
 var fs = require('fs');
 
 program
+  .usage('[options] [metrics_definition]')
   .option('-f, --file [metric_file]', 'Import a metric file of one or more metric definitions')
   .parse(process.argv);
 var args = program.args;
 
 if (!program.file && args.length < 1) {
   program.outputHelp();
-  flow.error('You must specify a metric definition to import');
+  flow.error('You must specify a metric definition to import, either as a string argument or by loading from a file using --file/-f');
   return;
 }
 
