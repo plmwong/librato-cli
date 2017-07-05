@@ -46,7 +46,7 @@ librato-cli space list
 #get definition for space 65408
 librato-cli space get 65408
 
-#list all metrics (limit 100)
+#list all metrics
 librato-cli metric list
 
 #list metrics that match the 'foo.bar' filter pattern

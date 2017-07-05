@@ -4,7 +4,7 @@ describe('when obtaining a list of metrics without a filter', function() {
   var output, calledEndPoint;
 
   beforeEach(function() {
-    var testResponse = { foo: "bar" };
+    var testResponse = { metrics: [ ], query: { } };
     var mockClient = {
           get: function(endPoint, handler) {
             calledEndPoint = endPoint;
@@ -13,6 +13,7 @@ describe('when obtaining a list of metrics without a filter', function() {
         };
     var mockProgram = {
         parse: function() { },
+        option: function() { return { parse: function() { }, option: function() { return { parse: function() { } } } } },
         args: [ ]
       };
 
@@ -28,7 +29,7 @@ describe('when obtaining a list of metrics without a filter', function() {
   });
 
   it('should print out the response from the /metrics resource', function() {
-    expect(output).toEqual('{\n  "foo": "bar"\n}');
+    expect(output).toEqual('[]');
   });
 });
 
@@ -36,7 +37,7 @@ describe('when obtaining a list of metrics with a specified filter', function() 
   var output, calledEndPoint;
 
   beforeEach(function() {
-    var testResponse = { foo: "bar" };
+    var testResponse = { metrics: [ ], query: { } };
     var mockClient = {
           get: function(endPoint, handler) {
             calledEndPoint = endPoint;
@@ -45,6 +46,7 @@ describe('when obtaining a list of metrics with a specified filter', function() 
         };
     var mockProgram = {
         parse: function() { },
+        option: function() { return { parse: function() { }, option: function() { return { parse: function() { } } } } },
         args: [ 'filter' ]
       };
 
@@ -60,6 +62,6 @@ describe('when obtaining a list of metrics with a specified filter', function() 
   });
 
   it('should print out the response from the /metrics resource', function() {
-    expect(output).toEqual('{\n  "foo": "bar"\n}');
+    expect(output).toEqual('[]');
   });
 });

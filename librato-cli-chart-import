@@ -12,7 +12,7 @@ if (args.length < 2) {
   return;
 }
 
-var importSpace = function(spaceId, chartDefinition) {
+var importChart = function(spaceId, chartDefinition) {
   var payload = {
     data: JSON.parse(chartDefinition),
     headers: { 'Content-Type': 'application/json' }
@@ -25,4 +25,4 @@ var importSpace = function(spaceId, chartDefinition) {
                                  });
 };
 
-importSpace(args[0], args[1]);
+importChart(args[0], args[1]);

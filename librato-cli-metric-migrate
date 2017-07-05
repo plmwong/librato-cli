@@ -1,0 +1,56 @@
+#!/usr/bin/env node
+var config = require('./modules/librato-cli-config');
+var client = require('./modules/librato-cli-client');
+var flow = require('./modules/librato-cli-flow');
+var program = require('commander');
+var fs = require('fs');
+
+program
+  .option('-f, --file [metric_file]', 'Migrate a metric file')
+  .option('-s, --suffix [metric_suffix]', 'Apply a suffix to the migrated metric name')
+  .parse(process.argv);
+
+var args = program.args;
+
+if (!program.file && args.length < 1) {
+  flow.error('You must specify a metric definition to migrate a metric');
+  return;
+}
+
+var migrateMetric = function(metricDefinition) {
+  metricDefinition.forEach(function(metric) {
+    if (program.suffix) {
+      metric.name = metric.name + program.suffix;
+    }
+
+    if (metric.type && metric.type === 'composite') {
+      metric.composite = metric.composite.replace(/((?:s|series){1}\(".+?",(?: )*)(".+?")((?:,(?: )*\{.+?\})?\))/, function(full, prefix, source, suffix) {
+        if (source === '"*"') {
+          return prefix + '{ }' + suffix;
+        }
+
+        if (source === '"%"') {
+          return prefix + source + suffix;
+        }
+
+        sourcePattern = source.replace(/^"(.*)"$/, '$1');
+
+        return prefix + '{ "source": "' + sourcePattern + '" }' + suffix;
+      });
+    }
+  });
+
+  console.log(JSON.stringify(metricDefinition, null, 2));
+};
+
+if (program.file) {
+  fs.readFile(program.file, 'utf8', function (err, data) {
+    if (err) {
+      return flow.error(err);
+    }
+
+    migrateMetric(JSON.parse(data));
+  });
+} else {
+  migrateMetric(JSON.parse(args[0]));
+}

@@ -6,4 +6,5 @@ program
   .command('get [metric name] [duration]', 'get measurements for a metric which have been reported within a duration')
   .command('update [metric name] [key=value]', 'change the properties for one or more metrics matching a wildcard pattern')
   .command('update-attr [metric name] [key=value]', 'change the attributes for one or more metrics matching a wildcard pattern')
+  .command('migrate [legacy_metric_definition]', 'migrates a legacy metric to an equivalent tagged metric')
   .parse(process.argv);
