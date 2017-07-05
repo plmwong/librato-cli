@@ -1,9 +1,9 @@
 var filesystem = require('fs');
 var os = require("os");
-var config = { baseUrl: 'https://metrics-api.librato.com/v1/' };
+var config = { baseUrl: 'https://metrics-api.librato.com/' };
 
 var initConfig = function() {
-  filesystem.writeFileSync(__dirname + '/../config.json', '{' + os.EOL + '    "baseUrl": "https://metrics-api.librato.com/v1/"' + os.EOL + '}' + os.EOL);
+  filesystem.writeFileSync(__dirname + '/../config.json', '{' + os.EOL + '    "baseUrl": "https://metrics-api.librato.com/"' + os.EOL + '}' + os.EOL);
 };
 
 var saveConfig = function() {
