@@ -1,0 +1,69 @@
+#!/usr/bin/env node
+var config = require('./modules/librato-cli-config');
+var client = require('./modules/librato-cli-client');
+var flow = require('./modules/librato-cli-flow');
+var program = require('commander');
+var fs = require('fs');
+
+program
+  .option('-f, --file [alert_file]', 'Migrate an alert file')
+  .option('-m, --metrics [metrics_file]', 'A list of the pre-migrated composite metrics')
+  .option('-ms, --metricsuffix [metric_suffix]', 'The suffix (if any) which was applied when migrating the metrics')
+  .option('-s, --suffix [alert_suffix]', 'Apply a suffix to the migrated alert name')
+  .parse(process.argv);
+
+var args = program.args;
+
+if (!program.file && args.length < 2) {
+  flow.error('You must specify an alert definition and a composite metric definition to migrate an alert');
+  return;
+}
+
+var migrateAlert = function(alertDefinition, metricDefinitions) {
+  alertDefinition.forEach(function(alert) {
+    if (program.suffix) {
+      alert.name = alert.name + program.suffix;
+    }
+
+    alert.md = true;
+
+    var metricNames = metricDefinitions.map(function(metric) {
+      return metric.name;
+    });
+
+    alert.conditions.forEach(function(condition) {
+      if (metricNames.indexOf(condition.metric_name) > 0) {
+        condition.metric_name = condition.metric_name + program.metricsuffix;
+      }
+    });
+  });
+
+  console.log(JSON.stringify(alertDefinition, null, 2));
+};
+
+var loadAlerts = function(metrics) {
+  if (program.file) {
+    fs.readFile(program.file, 'utf8', function (err, data) {
+      if (err) {
+        return flow.error(err);
+      }
+
+      migrateAlert(JSON.parse(data), metrics);
+    });
+  } else {
+    migrateAlert(JSON.parse(args[0]), metrics);
+  }
+}
+
+if (program.metrics) {
+  fs.readFile(program.metrics, 'utf8', function (err, data) {
+    if (err) {
+      return flow.error(err);
+    }
+
+    loadAlerts(JSON.parse(data));
+  });
+} else {
+  loadAlerts([]);
+}
+
