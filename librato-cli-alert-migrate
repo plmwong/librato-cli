@@ -8,7 +8,7 @@ var fs = require('fs');
 program
   .option('-f, --file [alert_file]', 'Migrate an alert file')
   .option('-m, --metrics [metrics_file]', 'A list of the pre-migrated composite metrics')
-  .option('-ms, --metricsuffix [metric_suffix]', 'The suffix (if any) which was applied when migrating the metrics')
+  .option('-x, --metricsuffix [metric_suffix]', 'The suffix (if any) which was applied when migrating the metrics')
   .option('-s, --suffix [alert_suffix]', 'Apply a suffix to the migrated alert name')
   .parse(process.argv);
 
@@ -33,7 +33,25 @@ var migrateAlert = function(alertDefinition, metricDefinitions) {
 
     alert.conditions.forEach(function(condition) {
       if (metricNames.indexOf(condition.metric_name) > 0) {
-        condition.metric_name = condition.metric_name + program.metricsuffix;
+        condition.metric_name = condition.metric_name + (program.metricsuffix ? program.metricsuffix : '');
+
+        if (condition.source) {
+          var source = condition.source;
+
+          if (source !== '*') {
+            var sourceTag = {
+              name: "source",
+              grouped: false,
+              values: [
+                source
+              ]
+            };
+
+            condition.tags = [ sourceTag ];
+          }
+        }
+
+        delete condition.source;
       }
     });
   });
